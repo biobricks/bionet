@@ -19,13 +19,25 @@ The API includes the following modules written for the Bionet:
 An assortment of express middleware functions that handle access control to the API.  
   
 ### adminRequired
-Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges.
+Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges.  
+Example:
+```js
+app.post('/virtuals/:virtualID/edit', adminRequired, (req, res) => { /*...*/ })
+```
 
 ### userRequired
-Middleware that verifies the JSON Web Token and determines if the User exists.
+Middleware that verifies the JSON Web Token and determines if the User exists.  
+Example:
+```js
+app.get('/profile', userRequired, (req, res) => { /*...*/ })
+```
 
 ### adminOrOwnerRequired
-Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges or is the owner of the record being operated on in the database.
+Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges or is the owner of the record being operated on in the database.  
+Example:
+```js
+app.post('/physicals/:physicalID/remove', adminOrOwnerRequired, (req, res) => { /*...*/ })
+```
 
 ## database
 A module to house database connection and events.
@@ -38,15 +50,53 @@ An assortment of asynchronous functions to populate both breadcrumb array and re
 
 ### fetchAll
 An asynchronous function that takes any Model as a parameter and returns an array of that Models records from the database, with the current breadcrumbs and recursive children appended to the database record.  
+Example:  
+```js
+const fetchAll = require('./modules/fetch').fetchAll;
+
+fetchAll(Lab)
+.then((result) => {
+  const success = result.success; // returns true/false if the database request was a success
+  const message = result.message; // returns a human readable message used by the react client to alert the User of the request status
+  const error = result.error; // returns an error object if one exists
+  const labs = result.data; // returns an array of lab records
+})
+.catch((error) => {
+  throw error;
+});
+```
+Or within a async function:
+```js
+const labsResult = await fetchAll(Lab);
+```
 
 ### fetchOne
 An asynchronous function that takes any Model as the first parameter and a string ID as the second parameter. FetchOne returns a single record from the database based on the Model and ID in the parameters, with the current breadcrumbs and recursive children appended.  
+Example:  
+```js
+const fetchOne = require('./modules/fetch').fetchOne;
+
+fetchOne(Lab, '123exampleLabID4567')
+.then((result) => {
+  const success = result.success; // returns true/false if the database request was a success
+  const message = result.message; // returns a human readable message used by the react client to alert the User of the request status
+  const error = result.error; // returns an error object if one exists
+  const lab = result.data; // returns an object of the requested lab record
+})
+.catch((error) => {
+  throw error;
+});
+```
+Or within a async function:
+```js
+const labResult = await fetchOne(Lab, '123exampleLabID4567');
+```
 
 # NPM Scripts
 Several of the NPM scripts found in ./package.json control database backup, maintenance and use of test data.
 
 ## clear
-Clears every collection from the database:  
+Clears every collection from the database:   
 ```bash
 npm run db:clear
 ```
