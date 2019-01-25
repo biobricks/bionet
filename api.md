@@ -149,6 +149,12 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Us
 **email** - The Users email address.  
 **imageUrl** - A link to an image to be used for the Users profile.  
 
+### User Routes
+**List Users** - /users  
+**User Profile** - /users/:userID  
+**New User** - /signup  
+**Edit User** - /users/:userID/edit  
+**Delete User** - /users/:userID/remove
 
 ## Lab
 
@@ -183,7 +189,12 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a La
 **users** - An 'array' or list of User IDs that represent the members of the Lab.  
 **joinRequests** - An array of User IDs that represent the Users requesting membership to the Lab.  
 
-
+### Lab Routes
+**List Labs** - /labs  
+**Lab Profile** - /labs/:labID  
+**New Lab** - /labs/new  
+**Edit Lab** - /labs/:labID/edit  
+**Delete Lab** - /labs/:labID/remove
 
 ## Container
 
@@ -234,7 +245,12 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Co
 **bgColor** - A color field representing the background color of the Container when shown in a grid as a child of its parent Lab or Container.  
 **breadcrumbs** - A placeholder array that holds the parent record tree from the current Container up to its Lab.
 
-
+### Container Routes
+**List Containers** - /containers  
+**Container Profile** - /containers/:containerID  
+**New Container** - /containers/new  
+**Edit Container** - /containers/:containerID/edit  
+**Delete Container** - /containers/:containerID/remove
 
 ## Virtual
 
@@ -272,6 +288,13 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Vi
 **fgSubmitted** - A boolean (true/false) representing whether the Virtual was submitted to Free Genes.  
 **fgStage** - A number representing what stage of shipping/processing/returning the Virtual is currently in within Free Genes.  
 **category** - A text field used to assist sorting of Virtuals.
+
+### Virtual Routes
+**List Virtuals** - /virtuals  
+**Virtual Profile** - /virtuals/:virtualID  
+**New Virtual** - /virtuals/new  
+**Edit Virtual** - /virtuals/:virtualID/edit  
+**Delete Virtual** - /virtuals/:virtualID/remove
 
 ## Physical
 
@@ -311,3 +334,10 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Ph
 **virtual** - The ID of the Virtual that the Physical is an instantiation of.  
 **width** - A number that represents the grid cell width of the Physical inside its parent Container or Lab.  
 **height** - A number that represents the grid cell height of the Physical inside its parent Container or Lab. 
+
+### Physical Routes
+**List Physicals** - /physicals  
+**Physical Profile** - /physicals/:physicalID  
+**New Physical** - /physicals/new  
+**Edit Physical** - /physicals/:physicalID/edit  
+**Delete Physical** - /physicals/:physicalID/remove
