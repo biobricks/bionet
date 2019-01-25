@@ -151,8 +151,20 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Vi
 }
 ```
 
-
-
+### Virtual Attributes
+**createdAt** - A javascript Date object representing when the Virtual was created.  
+**createdBy** - The ID of the User that created the Virtual.  
+**updatedAt** - A javascript Date object representing when the Virtual was last updated.  
+**updatedBy** - The ID of the User that last updated the Virtual.  
+**name** - The name of the Virtual.  
+**description** - A short description of the Virtual.  
+**isAvailable** - A boolean (true/false) representing whether the sample is available through Free Genes.  
+**provenance** - A text field representing the origin of the created Virtual.  
+**genotype** - A string field representing the genotype of the Virtual.  
+**sequence** - The DNA/RNA sequence representing the Virtual.  
+**fgSubmitted** - A boolean (true/false) representing whether the Virtual was submitted to Free Genes.  
+**fgStage** - A number representing what stage of shipping/processing/returning the Virtual is currently in within Free Genes.  
+**category** - A text field used to assist sorting of Virtuals.
 
 ## Physical
 
@@ -177,5 +189,18 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Ph
 }
 ```
 
-
-
+### Physical Attributes
+**createdAt** - A javascript Date object representing when the Physical was created.  
+**createdBy** - The ID of the User that created the Physical.  
+**updatedAt** - A javascript Date object representing when the Physical was last updated.  
+**updatedBy** - The ID of the User that last updated the Physical.  
+**name** - The name of the Physical.  
+**description** - A short description of the Physical.  
+**lab** - The ID of the Lab that houses the Physical.  
+**parent** - The ID of the 'parent' Container that houses the Physical, if one exists. If no parent Container ID exists, it is assumed the parent is the Lab.   
+**parentX** - The 2D/3D X location coordinate within the Physicals parent.  
+**parentY** - The 2D/3D Y location coordinate within the Physicals parent.  
+**parentZ** - The 2D/3D Z location coordinate within the Physicals parent.  
+**virtual** - The ID of the Virtual that the Physical is an instantiation of.  
+**width** - A number that represents the grid cell width of the Physical inside its parent Container or Lab.  
+**height** - A number that represents the grid cell height of the Physical inside its parent Container or Lab. 
