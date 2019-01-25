@@ -48,7 +48,7 @@ An asynchronous function that loads configuration for the connection to the data
 ## fetch
 An assortment of asynchronous functions to populate both breadcrumb array and recursive child records.
 
-### fetchAll
+### fetchAll(Model)
 An asynchronous function that takes any Model as a parameter and returns an array of that Models records from the database, with the current breadcrumbs and recursive children appended to the database record.  
 Example:  
 ```js
@@ -70,7 +70,7 @@ Or within a async function:
 const labsResult = await fetchAll(Lab);
 ```
 
-### fetchOne
+### fetchOne(Model, recordID)
 An asynchronous function that takes any Model as the first parameter and a string ID as the second parameter. FetchOne returns a single record from the database based on the Model and ID in the parameters, with the current breadcrumbs and recursive children appended.  
 Example:  
 ```js
