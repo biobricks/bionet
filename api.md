@@ -42,6 +42,32 @@ An asynchronous function that takes any Model as a parameter and returns an arra
 ### fetchOne
 An asynchronous function that takes any Model as the first parameter and a string ID as the second parameter. FetchOne returns a single record from the database based on the Model and ID in the parameters, with the current breadcrumbs and recursive children appended.  
 
+# NPM Scripts
+Several of the NPM scripts found in ./package.json control database backup, maintenance and use of test data.
+
+## clear
+Clears every collection from the database:  
+```bash
+npm run db:clear
+```
+
+## save
+Saves a backup of the database to a timestamped file.
+```bash
+npm run db:save
+```
+
+## restore
+Restores the last backup to the database.
+```bash
+npm run db:restore
+```
+
+## seed
+Clears and fills the database with a large amount of example test data.
+```bash
+npm run db:seed
+```
 
 # Models
 The [MongoDB](https://www.mongodb.com/) [Object Models](https://en.wikipedia.org/wiki/Object-modeling_technique) or 'Models' are found within the ```./api/models``` directory and contains the following models:
