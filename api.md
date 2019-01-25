@@ -1,7 +1,7 @@
 # API Documentation
 An [Application Programming Interface](https://en.wikipedia.org/wiki/Application_programming_interface) (API) that receives requests from the [React](https://reactjs.org/) [client](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) and responds with [JSON](https://www.json.org/) data.  
 
-# Modules
+# Third-Party Modules 
 The API includes the following third-party [Node JS](https://nodejs.org) Modules:  
 [bcryptjs](https://www.npmjs.com/package/bcryptjs) - Password Hashing - Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.  
 [body-parser](https://www.npmjs.com/package/body-parser) - Express [middleware](https://en.wikipedia.org/wiki/Middleware) to handle incoming requests and their payload or 'body'.  
@@ -11,6 +11,37 @@ The API includes the following third-party [Node JS](https://nodejs.org) Modules
 [mongoose](https://www.npmjs.com/package/mongoose) - A [MongoDB](https://www.mongodb.com/) [object modeling](https://en.wikipedia.org/wiki/Object-modeling_technique) tool designed to work in an [asynchronous](https://en.wikipedia.org/wiki/Asynchronous_method_invocation) environment.  
 [passport](https://www.npmjs.com/package/passport) - Express-compatible authentication middleware.  
 [passport-local](https://www.npmjs.com/package/passport-local) - Passport strategy for authentication with a username and password.  
+
+# Custom Modules
+The API includes the following modules written for the Bionet:
+
+## apiAccess
+An assortment of express middleware functions that handle access control to the API.  
+  
+### adminRequired
+Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges.
+
+### userRequired
+Middleware that verifies the JSON Web Token and determines if the User exists.
+
+### adminOrOwnerRequired
+Middleware that verifies the JSON Web Token and determines if the User has administrator priviledges or is the owner of the record being operated on in the database.
+
+## database
+A module to house database connection and events.
+
+### connect
+An asynchronous function that loads configuration for the connection to the database, connects to the database and logs on successful connect and disconnect.
+
+## fetch
+An assortment of asynchronous functions to populate both breadcrumb array and recursive child records.
+
+### fetchAll
+An asynchronous function that takes any Model as a parameter and returns an array of that Models records from the database, with the current breadcrumbs and recursive children appended to the database record.  
+
+### fetchOne
+An asynchronous function that takes any Model as the first parameter and a string ID as the second parameter. FetchOne returns a single record from the database based on the Model and ID in the parameters, with the current breadcrumbs and recursive children appended.  
+
 
 # Models
 The [MongoDB](https://www.mongodb.com/) [Object Models](https://en.wikipedia.org/wiki/Object-modeling_technique) or 'Models' are found within the ```./api/models``` directory and contains the following models:
