@@ -341,3 +341,6 @@ The structure or [schema](https://en.wikipedia.org/wiki/Database_schema) of a Ph
 **New Physical** - /physicals/new  
 **Edit Physical** - /physicals/:physicalID/edit  
 **Delete Physical** - /physicals/:physicalID/remove
+
+# Authentication
+Authentication is handled through the [passport](https://www.npmjs.com/package/passport) module with a local authentication strategy using the [passport-local](https://www.npmjs.com/package/passport-local) module, allowing for a local database to signup and login based on 'username' and 'password' fields. The User model has a pre-save hook that uses the [bcryptjs](https://www.npmjs.com/package/bcryptjs) module along with the app secret found in the API config at './api.config.js' to encrypt the password in the database.
