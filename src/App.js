@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import './App.scss';
-import { Container, Row, Column, Card, Navbar, NavbarLink, NavbarDropdown, NavbarDropdownLink } from './components/Bootstrap';
+import { Navbar, NavbarLink, NavbarDropdown, NavbarDropdownLink, AppFooter } from './components/Bootstrap';
 import logo from './images/bionet-logo.png';
+
+import Landing from './components/pages/Landing';
+import About from './components/pages/About';
+import Login from './components/pages/Login';
+import Signup from './components/pages/Signup';
+import Profile from './components/pages/Profile';
 
 class App extends Component {
   render() {
@@ -19,24 +25,19 @@ class App extends Component {
           </Navbar>
           
           <Switch>
-            <Route exact path="/about" render={(props) => (<div>About Page</div>)} />
-            <Route exact path="/login" render={(props) => (<div>Login Page</div>)} />
-            <Route exact path="/signup" render={(props) => (<div>Signup Page</div>)} />
-            <Route exact path="/profile" render={(props) => (<div>User Profile Page</div>)} />
-            <Route exact path="/" render={(props) => (
-              <Container>
-                <Row>
-                  <Column col="12" colSm="10" colMd="6" colLg="4">
-                    <Card icon="home" title="Home" className="mt-3">
-                      Landing Page
-                    </Card>
-                  </Column>  
-                </Row>
-              </Container>
-            )} />
-            
+            <Route exact path="/about" render={(props) => <About {...this.state} />} />
+            <Route exact path="/login" render={(props) => <Login {...this.state} />} />
+            <Route exact path="/signup" render={(props) => <Signup {...this.state} />} />
+            <Route exact path="/profile" render={(props) => <Profile {...this.state} />} />
+            <Route exact path="/" render={(props) => <Landing {...this.state} />} />
           </Switch>
+
         </div>
+
+        <AppFooter className="text-center">
+          <Link to="/about">Learn more</Link> about the bionet.
+        </AppFooter>
+        
       </div>
     );
   }

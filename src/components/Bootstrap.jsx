@@ -190,3 +190,15 @@ export const Navbar = class Navbar extends Component {
     );
   }
 }
+
+export const AppFooter = class AppFooter extends Component {
+  render() {
+    let classes = "Footer bg-dark text-light p-3";
+    if (this.props.className) { classes += ` ${this.props.className}` }
+    return (
+      <div className={classes}>
+        {this.props.children}
+      </div>
+    );
+  }      
+}
