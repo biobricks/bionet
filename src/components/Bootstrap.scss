@@ -1,0 +1,21 @@
+/* Bootstrap Grid Breakpoints */
+$col-sm:   576px;
+$col-md:   768px;
+$col-lg:   992px;
+$col-xl:   1200px;
+
+/* Text Colors */
+$lightest: rgba(255,255,255,1);
+$lighter: rgba(255,255,255,0.75);
+$light: rgba(255,255,255,0.5);
+$dark: rgb(23,43,47);
+$darker: rgb(4, 32, 13);
+$darkest: rgb(0, 0, 0);
+
+/* Bootstrap Components */
+
+.card {
+  border-color: $darker;
+  border-radius: 0px;
+  .card-header, .card-body { border-radius: 0px; }
+}
