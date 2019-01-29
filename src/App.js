@@ -11,10 +11,11 @@ class App extends Component {
         <div className="viewport-container">
           
           <Navbar brandImgSrc={logo} brandWidth="40">
-            <NavbarLink to="/about">About</NavbarLink>
             <NavbarDropdown label="Account" icon="account" id="account-dropdown">
-              <NavbarDropdownLink to="/about" label="About" icon="information" />
+              <NavbarDropdownLink to="/login" label="Login" icon="login-variant" />
+              <NavbarDropdownLink to="/signup" label="Sign Up" icon="clipboard-account" />
             </NavbarDropdown>
+            <NavbarLink to="/about">About</NavbarLink>
           </Navbar>
           
           <Switch>
