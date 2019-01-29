@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.scss';
-import { Container, Row, Column, Card } from './components/Bootstrap';
+import { Container, Row, Column, Card, Navbar, NavbarLink, NavbarDropdown, NavbarDropdownLink } from './components/Bootstrap';
+import logo from './images/bionet-logo.png';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <div className="viewport-container">
+          
+          <Navbar brandImgSrc={logo} brandWidth="40">
+            <NavbarLink to="/about">About</NavbarLink>
+            <NavbarDropdown label="Account" icon="account" id="account-dropdown">
+              <NavbarDropdownLink to="/about" label="About" icon="information" />
+            </NavbarDropdown>
+          </Navbar>
+          
           <Switch>
             <Route exact path="/about" render={(props) => (<div>About Page</div>)} />
             <Route exact path="/login" render={(props) => (<div>Login Page</div>)} />
@@ -24,6 +33,7 @@ class App extends Component {
                 </Row>
               </Container>
             )} />
+            
           </Switch>
         </div>
       </div>
