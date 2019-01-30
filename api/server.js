@@ -4,6 +4,7 @@ const port = 3001; // port the app will listen on
 const mongoose = require('mongoose'); // mongoDB object modeling
 const Config = require('./config.js'); // api configuration
 
+
 /***********************/
 /* Connect To Database */
 /***********************/
@@ -30,14 +31,12 @@ mongoose.connect(
   }
 });
 
-api.get('/', (req, res) => { // http get request to landing page
-  res.json({ // respond with json
-    success: true,
-    message: "Welcome to the Bionet API.",
-    errors: [],
-    data: {}
-  });
-});
+
+/***********************/
+/* Routes              */
+/***********************/
+
+require('./routes/static.js')(api); // static info routes
 
 api.listen(port, () => { // listen on port
   console.log(`API listening on localhost:${port}`);
