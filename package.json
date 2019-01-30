@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "express": "^4.16.4",
+    "mongoose": "^5.4.7",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3"
   },
   "scripts": {
-    "start": "concurrently \"node api/server\" \"react-scripts start\"",
+    "start": "concurrently \"nodemon api/server\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -26,6 +27,7 @@
   ],
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9"
   }
 }
