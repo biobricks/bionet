@@ -1,8 +1,12 @@
+const Config = require('./config.js'); // api configuration
 const express = require('express'); // require express module
 const api = express(); // instantiate or start express
-const port = 3001; // port the app will listen on
 const mongoose = require('mongoose'); // mongoDB object modeling
-const Config = require('./config.js'); // api configuration
+const passport = require("passport"); // authentication strategies
+const bearerToken = require("express-bearer-token"); // express json web token middleware
+const bodyParser = require('body-parser'); // handle html forms
+const port = 3001; // port the app will listen on
+
 
 
 /***********************/
@@ -33,11 +37,52 @@ mongoose.connect(
 
 
 /***********************/
+/* Authentication      */
+/***********************/
+
+// instantiate passport
+api.use(passport.initialize());
+
+// set passport login and signup strategies
+const localSignupStrategy = require("./passport/local-signup");
+const localLoginStrategy = require("./passport/local-login");
+passport.use("local-signup", localSignupStrategy);
+passport.use("local-login", localLoginStrategy);
+
+
+/***********************/
+/* CORS                */
+/***********************/
+
+// set cross origin resource sharing (CORS) policy
+api.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, HEAD, OPTIONS, POST, PUT, DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Authorization, Origin, Accept, X-Requested-With, Content-Type, X-Access-Token"
+  );
+  res.header("Cache-Control", "no-cache");
+  next();
+});
+
+
+/***********************/
 /* Routes              */
 /***********************/
 
 require('./routes/static.js')(api); // static info routes
+require('./routes/auth.js')(api, passport); // user authentication routes
 
-api.listen(port, () => { // listen on port
+
+/***********************/
+/* Listen              */
+/***********************/
+
+api.listen(port, () => {
   console.log(`API listening on localhost:${port}`);
 });
