@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Row, Column, Card } from '../Bootstrap';
+import Container from '../bootstrap/grid/Container';
+import Row from '../bootstrap/grid/Row';
+import Column from '../bootstrap/grid/Column';
+import Card from '../bootstrap/components/Card';
+
 import Api from '../../modules/Api';
 
 class Landing extends Component {

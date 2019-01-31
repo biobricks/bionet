@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
 import Auth from '../../modules/Auth';
-import { Container, Row, Column, Card, Form, InputText, InputPassword, Button } from '../Bootstrap';
+import Container from '../bootstrap/grid/Container';
+import Row from '../bootstrap/grid/Row';
+import Column from '../bootstrap/grid/Column';
+import Card from '../bootstrap/components/Card';
+import Button from '../bootstrap/components/Button';
+import Form from '../bootstrap/forms/Form';
+import InputText from '../bootstrap/forms/InputText';
+import InputPassword from '../bootstrap/forms/InputPassword';
+
 
 class Login extends Component {
 

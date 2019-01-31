@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarLink, NavbarDropdown, NavbarDropdownLink } from './Bootstrap';
+import Navbar from './bootstrap/components/Navbar';
+import NavbarLink from './bootstrap/components/NavbarLink';
+import NavbarDropdown from './bootstrap/components/NavbarDropdown';
+import NavbarDropdownLink from './bootstrap/components/NavbarDropdownLink';
 import logo from '../images/bionet-logo.png';
 
 class Navigation extends Component {

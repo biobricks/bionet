@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { AppFooter } from './Bootstrap';
+import AppFooter from './bootstrap/components/AppFooter';
 
 class Footer extends Component {
   render () {
