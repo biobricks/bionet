@@ -16,3 +16,5 @@ The development process can be followed step-by-step by reviewing the 'walkthrou
 7. [Configure API - Part 2 - Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/7.api.2.md) - Setup API JWT Authentication.  
 8. [React Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/8.react.4.md) - Setup React Authentication.  
 9. [React Code Splitting](https://github.com/biobricks/bionet/blob/master/walkthrough/9.react.5.md) - Setup React Error Boundaries, Suspense and Lazy Loading.  
+10. [API Models](https://github.com/biobricks/bionet/blob/master/walkthrough/10.api.3.md) - Expand the database models to include Labs, Containers, Physicals and Virtuals.  
+  
