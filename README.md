@@ -13,4 +13,5 @@ The development process can be followed step-by-step by reviewing the 'walkthrou
 4. [React Components - Part 1 - Bootstrap, Icons & Viewport Container](https://github.com/biobricks/bionet/blob/master/walkthrough/4.react.2.md) - Continue React application setup. Add a Viewport Container with Responsive Background Image, Bootstrap Responsive Grid Components and a Bootstrap Card component to display data.  
 5. [React Components - Part 2 - Navigation & Footer](https://github.com/biobricks/bionet/blob/master/walkthrough/5.react.3.md) - Add a Responsive Navigation and Footer, scaffold pages for routes.  
 6. [Configure API - Part 1 - The Database](https://github.com/biobricks/bionet/blob/master/walkthrough/6.api.1.md) - Setup the API connection to a mongoDB instance.  
-7. [Configure API - Part 2 - Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/7.api.2.md) - Setup JWT Authentication to the API.  
+7. [Configure API - Part 2 - Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/7.api.2.md) - Setup API JWT Authentication.  
+8. [React Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/8.react.4.md) - Setup React Authentication.
