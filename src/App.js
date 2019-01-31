@@ -11,6 +11,33 @@ import Signup from './components/pages/Signup';
 import Profile from './components/pages/Profile';
 
 class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.getData = this.getData.bind(this);
+  }
+  
+  async getData() {
+    try {
+      
+    } catch (error) {
+      return {
+
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.getData()
+    .then((result) => {
+
+    })
+    .catch((error) => {
+      console.error('App.js.componentDidMount', error);
+    });
+  }
+
   render() {
     return (
       <div className="App">

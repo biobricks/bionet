@@ -1,60 +1,3 @@
-# React Authentication
-
-## Scaffold Directories & Files
-We will store the React clients configuration in `./src/config.js`.  
-We will be keeping our custom modules in their own directory `./src/modules`.  
-The `./src/modules` directory will contain two files:  
-- `Auth.js` - The client module that handles storage of a JWT in the web browsers [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).  
-- `Api.js` - The client module that has async functions for interacting with our API.  
-
-From the terminal:
-```bash
-touch src/config.js
-mkdir src/modules && touch src/modules/Auth.js && touch src/modules/Api.js
-```
-
-
-## Client Configuration
-Fill `./src/config.js` with the following:
-```js
-module.exports = {
-  "app": {
-    "title": "Bionet",
-    "description": "A Biological Material Inventory Management System"
-  },
-  "apiEndpoint": "http://localhost:3001"
-};
-```
-
-## Authentication Module
-Fill `./src/modules/Auth.js` with the following:
-```js
-class Auth {
-
-  static authenticateUser(token) {
-    localStorage.setItem('token', token);
-  }
-
-  static isUserAuthenticated() {
-    return localStorage.getItem('token') !== null;
-  }
-
-  static deauthenticateUser() {
-    localStorage.removeItem('token');
-  }
-
-  static getToken() {
-    return localStorage.getItem('token');
-  }
-
-}
-
-export default Auth;
-```
-
-## API Module
-Fill `./src/modules/Api.js` with the following:
-```js
 import Config from '../config';
 import Auth from './Auth';
 
@@ -168,4 +111,3 @@ async function post(endpoint, form) {
 let api = { getCurrentUser, get, post, loginCurrentUser, logoutCurrentUser, login, signup };
 
 export default api;
-```
