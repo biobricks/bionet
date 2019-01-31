@@ -5,7 +5,7 @@ const mongoose = require('mongoose'); // mongoDB object modeling
 const passport = require("passport"); // authentication strategies
 const bearerToken = require("express-bearer-token"); // express json web token middleware
 const bodyParser = require('body-parser'); // handle html forms
-const port = 3001; // port the app will listen on
+const port = Config.api.port; // port the app will listen on
 
 
 
@@ -85,6 +85,7 @@ api.use((req, res, next) => {
 require('./routes/static.js')(api); // static info routes
 require('./routes/auth.js')(api, passport); // user authentication routes
 require('./routes/models.js')(api); // all model routes
+require('./routes/reset.js')(api); // reset password
 
 
 /***********************/

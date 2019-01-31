@@ -1,4 +1,4 @@
-const userRequired = require("../modules/apiAccess").userRequired;
+const userRequired = require('../modules/apiAccess').userRequired;
 
 module.exports = function(api, passport) {
 

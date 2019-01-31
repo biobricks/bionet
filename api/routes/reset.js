@@ -1,0 +1,132 @@
+const Config = require('../config');
+const User = require('../models/User');
+const userRequired = require('../modules/apiAccess').userRequired;
+const shortid = require('shortid');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(Config.sendgrid.key);
+
+module.exports = function(api) { 
+
+// post resetToken and newPassword - if valid then save and return current user
+api.post('/reset-password/validate', (req, res) => {
+  let resetToken = req.body.resetToken && req.body.resetToken.length > 5 ? req.body.resetToken : false;
+  let newPassword = req.body.newPassword && req.body.newPassword.length > 5 ? req.body.newPassword : false;
+  if (resetToken && newPassword) {
+    let queryParams = {
+      'resetToken': resetToken
+    };
+    User.findOne({queryParams}, (error, currentUser) => {
+      if (error) {
+        res.status(400).json({
+          message: 'There was an error while trying to find the User in the database.',
+          user: {},
+          error
+        });
+      } else if (!currentUser) {   
+        res.status(400).json({
+          message: 'User not found in the database.',
+          user: {},
+          error: new Error('User not found in the database.')
+        });
+      } else {   
+        if (resetToken === currentUser.resetToken) {
+          currentUser.password = newPassword;
+          currentUser.save((error, savedUser) => {
+            if (error) {
+              res.status(400).json({
+                message: "User password change failed.",
+                user: currentUser || {},
+                error
+              });
+            } else {
+              res.status(200).json({
+                message: "Users password successfully changed.",
+                user: savedUser || {},
+                error: {}
+              });
+            }
+          });
+        } else {
+          res.status(400).json({
+            message: "User password change failed - Invalid Reset Token.",
+            user: currentUser || {},
+            error: new Error('Invalid Reset Token')
+          });          
+        }  
+      }  
+    });  
+  } else {
+    res.status(400).json({
+      message: "User password change failed.",
+      user: {},
+      error: new Error('User ID, Reset Token was missing from the request or the User was not found.')
+    });
+  }  
+});
+
+// post user account email address and receive reset password token by email
+api.post('/reset-password', (req, res) => {
+  let email = req.body.resetEmail && req.body.resetEmail.length > 9;
+  if (email) {
+    User.findOne({'email': email}, (error, currentUser) => {
+      if (error) {
+        res.status(400).json({
+          message: 'There was an error while making the User query to the database.',
+          user: {},
+          error
+        });
+      } else if (!currentUser) {   
+        res.status(400).json({
+          message: 'User not found.',
+          user: {},
+          error: new Error('User not found.')
+        });
+      } else {
+        const resetToken = shortid.generate();
+        currentUser.resetToken = resetToken;
+        currentUser.save((error, savedUser) => {
+          if (error) {
+            res.status(400).json({
+              message: 'There was an error while saving the reset token to the database.',
+              user: {},
+              error
+            });
+          } else if (!savedUser) {   
+            res.status(400).json({
+              message: 'User not found.',
+              user: {},
+              error: new Error('User not found.')
+            });
+          } else {
+            const domain = `${Config.app.ssl ? 'https' : 'http'}://${Config.app.domain}`;
+            const messageText = `Hello ${currentUser.username},\nIf you recently requested an account password change please visit ${domain}/reset-password/validate and enter in the code '${resetToken}', otherwise disregard this message.\n - The ${domain} Team`;
+            let messageHtml = `<p>Hello ${currentUser.username},<br/><br/>`;
+            messageHtml += `If you recently requested an account password change please visit <a href="${domain}/reset-password/validate">${Config.app.ssl ? 'https' : 'http'}://${Config.app.domain}/reset-password/validate</a>`;
+            messageHtml += ` and enter in the code '${resetToken}', otherwise disregard this message.<br/> - The ${domain} Team</p>`;
+            const msg = {
+              to: currentUser.email,
+              from: `donotreply@${Config.app.domain}`,
+              subject: `Reset ${Config.app.name} Password`,
+              text: messageText,
+              html: messageHtml
+            };
+            sgMail.send(msg);
+            res.status(200).json({
+              message: `Password recovery instructions being sent to ${currentUser.email}.`,
+              user: currentUser || {},
+              error: {}
+            });
+          }
+        });     
+      }
+    });
+  } else {
+    res.status(400).json({
+      message: "User password change failed.",
+      user: currentUser || {},
+      error: Error('Email was not provided.')
+    });    
+  }  
+});
+
+};
