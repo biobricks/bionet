@@ -84,6 +84,7 @@ api.use((req, res, next) => {
 
 require('./routes/static.js')(api); // static info routes
 require('./routes/auth.js')(api, passport); // user authentication routes
+require('./routes/models.js')(api); // all model routes
 
 
 /***********************/

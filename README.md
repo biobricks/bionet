@@ -17,3 +17,4 @@ The development process can be followed step-by-step by reviewing the 'walkthrou
 8. [React Authentication](https://github.com/biobricks/bionet/blob/master/walkthrough/8.react.4.md) - Setup React Authentication.  
 9. [React Code Splitting](https://github.com/biobricks/bionet/blob/master/walkthrough/9.react.5.md) - Setup React Error Boundaries, Suspense and Lazy Loading.  
 10. [API Models](https://github.com/biobricks/bionet/blob/master/walkthrough/10.api.3.md) - Expand the database models to include Labs, Containers, Physicals and Virtuals.  
+11. [API Reset Password](https://github.com/biobricks/bionet/blob/master/walkthrough/11.api.4.md) - Add password reset and email features to the API.  
