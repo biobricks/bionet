@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import Container from '../bootstrap/grid/Container';
-import Row from '../bootstrap/grid/Row';
-import Column from '../bootstrap/grid/Column';
-import Card from '../bootstrap/components/Card';
+import React, { Component, Suspense, lazy } from 'react';
+
+const Container = lazy(() => import('../bootstrap/grid/Container'));
+const Row = lazy(() => import('../bootstrap/grid/Row'));
+const Column = lazy(() => import('../bootstrap/grid/Column'));
+const Card = lazy(() => import('../bootstrap/components/Card'));
 
 class RouteBoundary extends Component {
 
@@ -25,16 +26,18 @@ class RouteBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="RouteBoundary">
-          <Container>
-            <Row>
-              <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="alert-circle" title="Error" className="mt-3">
-                  <h4>Oops, something went wrong :(</h4>
-                  <p>{this.state.error.toString()}</p>
-                </Card>
-              </Column>
-            </Row>
-          </Container>      
+          <Suspense fallback="Loading...">
+            <Container>
+              <Row>
+                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                  <Card icon="alert-circle" title="Error" className="mt-3">
+                    <h4>Oops, something went wrong :(</h4>
+                    <p>{this.state.error.toString()}</p>
+                  </Card>
+                </Column>
+              </Row>
+            </Container> 
+          </Suspense>     
         </div>
       );
     }
