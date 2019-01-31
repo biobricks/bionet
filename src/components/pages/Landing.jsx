@@ -23,6 +23,8 @@ class Landing extends Component {
   }
 
   componentDidMount() {
+    // const testError = new Error('Test Error');
+    // throw testError;
     this.getData()
     .then((result) => {
       this.setState(result);
@@ -33,6 +35,7 @@ class Landing extends Component {
   }
 
   render() {
+
     return (
       <div className="Landing">
         <Container>

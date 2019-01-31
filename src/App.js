@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
 import './App.scss';
-import { Navbar, NavbarLink, NavbarDropdown, NavbarDropdownLink, AppFooter } from './components/Bootstrap';
-import logo from './images/bionet-logo.png';
+import Navigation from './components/Navigation';
+import Router from './components/Router';
+import Footer from './components/Footer';
 import Api from './modules/Api';
 
-import Landing from './components/pages/Landing';
-import About from './components/pages/About';
-import Login from './components/pages/Login';
-import Signup from './components/pages/Signup';
-import Profile from './components/pages/Profile';
 
 class App extends Component {
   
@@ -75,60 +70,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="viewport-container">
-          
-          <Navbar brandImgSrc={logo} brandWidth="40">
-            { this.state.isLoggedIn ? (
-              <>
-                <NavbarDropdown label="Account" icon="account" id="account-dropdown">
-                  <NavbarDropdownLink to="/profile" label="Profile" icon="account" />
-                  <button className="dropdown-item" onClick={this.logout}>
-                    <i className="mdi mdi-logout-variant mr-1" />Logout
-                  </button>
-                </NavbarDropdown>
-              </>
-            ) : (
-              <>
-               <NavbarLink to="/login">
-                <i className="mdi mdi-login-variant mr-1" />Login
-               </NavbarLink> 
-               <NavbarLink to="/signup">
-                <i className="mdi mdi-account-plus mr-1" />Sign Up
-               </NavbarLink> 
-              </>
-            )}
-            <NavbarLink to="/about">About</NavbarLink>
-          </Navbar>
-          
-          <Switch>
-            <Route exact path="/about" render={(props) => <About {...this.state} />} />
-            <Route exact path="/login" render={(props) => (
-              <Login 
-                {...props} 
-                {...this.state}
-                refresh={this.refresh}
-              />
-            )}/>
-            <Route exact path="/signup" render={(props) => (
-              <Signup 
-                {...props} 
-                {...this.state}
-              />
-            )}/>
-            <Route exact path="/profile" render={(props) => <Profile {...this.state} />} />
-            <Route exact path="/" render={(props) => (
-              <Landing 
-                {...props} 
-                {...this.state}
-              />
-            )}/>
-          </Switch>
-
+          <Navigation isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
+          <Router {...this.state} refresh={this.refresh} />
         </div>
-
-        <AppFooter className="text-center">
-          <Link to="/about">Learn more</Link> about the bionet.
-        </AppFooter>
-        
+        <Footer />
       </div>
     );
   }
