@@ -37,7 +37,7 @@ module.exports = function(api, passport) {
             }
           });
         }
-
+        console.log('local-signup error', err);
         return res.status(400).json({
           success: false,
           message: `Could not process the form.${JSON.stringify(err)}`

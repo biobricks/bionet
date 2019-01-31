@@ -40,6 +40,13 @@ mongoose.connect(
 /* Authentication      */
 /***********************/
 
+// handle url encoded forms
+api.use(bodyParser.urlencoded({ extended: true }));
+// handle json response
+api.use(bodyParser.json());
+// extract bearer token from request
+api.use(bearerToken());
+
 // instantiate passport
 api.use(passport.initialize());
 
