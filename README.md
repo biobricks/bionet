@@ -20,4 +20,5 @@ The development process can be followed step-by-step by reviewing the 'walkthrou
 11. [API Reset Password](https://github.com/biobricks/bionet/blob/master/walkthrough/11.api.4.md) - Add password reset and email features to the API.  
 12. [React Reset Password](https://github.com/biobricks/bionet/blob/master/walkthrough/12.react.6.md) - Add password and email features to the React client.  
 13. [Database Management](https://github.com/biobricks/bionet/blob/master/walkthrough/13.api.5.md) - Add NPM scripts for seeding, clearing backing up and restoring data from the database.  
-14. [User Interface 1 - Static Pages](https://github.com/biobricks/bionet/blob/master/walkthrough/14.react.7.md) - Setup the static pages in the application.  
+14. [User Interface 1 - Fade In Pages](https://github.com/biobricks/bionet/blob/master/walkthrough/14.react.7.md) - Setup the 'fade-in` page enhancement to the application.  
+15. [User Interface 2 - Users](https://github.com/biobricks/bionet/blob/master/walkthrough/15.react.7.md) - 

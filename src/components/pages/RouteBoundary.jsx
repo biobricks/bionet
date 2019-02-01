@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
+import FadeIn from 'react-fade-in';
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
@@ -27,16 +28,18 @@ class RouteBoundary extends Component {
       return (
         <div className="RouteBoundary">
           <Suspense fallback="Loading...">
-            <Container>
-              <Row>
-                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                  <Card icon="alert-circle" title="Error" className="mt-3">
-                    <h4>Oops, something went wrong :(</h4>
-                    <p>{this.state.error.toString()}</p>
-                  </Card>
-                </Column>
-              </Row>
-            </Container> 
+            <FadeIn>
+              <Container>
+                <Row>
+                  <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                    <Card icon="alert-circle" title="Error" className="mt-3">
+                      <h4>Oops, something went wrong :(</h4>
+                      <p>{this.state.error.toString()}</p>
+                    </Card>
+                  </Column>
+                </Row>
+              </Container>
+            </FadeIn>   
           </Suspense>     
         </div>
       );

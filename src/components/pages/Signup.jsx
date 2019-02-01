@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
+import FadeIn from 'react-fade-in';
 import { Link, Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
 
@@ -116,79 +117,81 @@ class Signup extends Component {
     return (
       <div className="Signup">
         <Suspense fallback="Loading...">
-          <Container>
-            <Row>
-              <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="account-plus" title="Signup" className="mt-3">
-                  <Form 
-                    onSubmit={this.onFormSubmit}
-                  >
-                    {this.state.errors.summary && (
-                      <div className="form-group">
-                        <p className="text-danger">{this.state.errors.summary}</p>
-                      </div>
-                    )}
-
-                    <InputText 
-                      label="Name"
-                      attribute="name"
-                      placeholder="name"
-                      value={this.state.form.name}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.name}
-                      error={this.state.errors.name}
-                    />
-                    <InputText 
-                      label="Email"
-                      attribute="email"
-                      placeholder="youremailaddress@example.com"
-                      value={this.state.form.email}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.email}
-                      error={this.state.errors.email}
-                    />
-                    <InputText 
-                      label="Username"
-                      attribute="username"
-                      placeholder="username"
-                      value={this.state.form.username}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.username}
-                      error={this.state.errors.username}
-                    />
-                    <InputPassword
-                      label="Password"
-                      attribute="password"
-                      placeholder="password"
-                      value={this.state.form.password}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.password}
-                      error={this.state.errors.password}
-                    />
-                    <InputPassword
-                      label="Confirm Password"
-                      attribute="passwordConfirm"
-                      placeholder="password (again)"
-                      value={this.state.form.passwordConfirm}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.passwordConfirm}
-                      error={this.state.errors.passwordConfirm}
-                    />
-                    <Button
-                      className="btn-block mt-3"
-                      color="success"
-                      submit
+          <FadeIn>
+            <Container>
+              <Row>
+                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                  <Card icon="account-plus" title="Signup" className="mt-3">
+                    <Form 
+                      onSubmit={this.onFormSubmit}
                     >
-                      <i className="mdi text-lg mdi-account-plus mr-2" />Sign Up
-                    </Button>
-                    <p className="mt-3 text-center">
-                      <Link to="/login">Have An Account Already?</Link>
-                    </p>
-                  </Form>
-                </Card>
-              </Column>  
-            </Row>
-          </Container>
+                      {this.state.errors.summary && (
+                        <div className="form-group">
+                          <p className="text-danger">{this.state.errors.summary}</p>
+                        </div>
+                      )}
+
+                      <InputText 
+                        label="Name"
+                        attribute="name"
+                        placeholder="name"
+                        value={this.state.form.name}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.name}
+                        error={this.state.errors.name}
+                      />
+                      <InputText 
+                        label="Email"
+                        attribute="email"
+                        placeholder="youremailaddress@example.com"
+                        value={this.state.form.email}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.email}
+                        error={this.state.errors.email}
+                      />
+                      <InputText 
+                        label="Username"
+                        attribute="username"
+                        placeholder="username"
+                        value={this.state.form.username}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.username}
+                        error={this.state.errors.username}
+                      />
+                      <InputPassword
+                        label="Password"
+                        attribute="password"
+                        placeholder="password"
+                        value={this.state.form.password}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.password}
+                        error={this.state.errors.password}
+                      />
+                      <InputPassword
+                        label="Confirm Password"
+                        attribute="passwordConfirm"
+                        placeholder="password (again)"
+                        value={this.state.form.passwordConfirm}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.passwordConfirm}
+                        error={this.state.errors.passwordConfirm}
+                      />
+                      <Button
+                        className="btn-block mt-3"
+                        color="success"
+                        submit
+                      >
+                        <i className="mdi text-lg mdi-account-plus mr-2" />Sign Up
+                      </Button>
+                      <p className="mt-3 text-center">
+                        <Link to="/login">Have An Account Already?</Link>
+                      </p>
+                    </Form>
+                  </Card>
+                </Column>  
+              </Row>
+            </Container>
+          </FadeIn>
         </Suspense>
       </div>
     );

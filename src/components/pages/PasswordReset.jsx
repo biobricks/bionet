@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
+import FadeIn from 'react-fade-in';
 import { Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
 
@@ -73,42 +74,44 @@ class PasswordReset extends Component {
     return (
       <div className="PasswordReset">
         <Suspense fallback="Loading...">
-          <Container>
-            <Row>
-              <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="lock-reset" title="Reset Password" className="mt-3">
-                  <Form 
-                    onSubmit={this.onFormSubmit}
-                  >
-                    {this.state.errors.summary && (
-                      <div className="form-group">
-                        <p className="text-danger">{this.state.errors.summary}</p>
-                      </div>
-                    )}
-
-                    <p>Enter your email associated with your account and you will be sent instructions on how to reset your password.</p>
-
-                    <InputText 
-                      label="Email"
-                      attribute="email"
-                      placeholder="your.account.email@example.com"
-                      value={this.state.form.email}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.email}
-                      error={this.state.errors.email}
-                    />
-                    <Button
-                      className="btn-block mt-3"
-                      color="success"
-                      submit
+          <FadeIn>
+            <Container>
+              <Row>
+                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                  <Card icon="lock-reset" title="Reset Password" className="mt-3">
+                    <Form 
+                      onSubmit={this.onFormSubmit}
                     >
-                      <i className="mdi text-lg mdi-lock-reset mr-2" />Submit
-                    </Button>
-                  </Form>
-                </Card>
-              </Column>  
-            </Row>
-          </Container>
+                      {this.state.errors.summary && (
+                        <div className="form-group">
+                          <p className="text-danger">{this.state.errors.summary}</p>
+                        </div>
+                      )}
+
+                      <p>Enter your email associated with your account and you will be sent instructions on how to reset your password.</p>
+
+                      <InputText 
+                        label="Email"
+                        attribute="email"
+                        placeholder="your.account.email@example.com"
+                        value={this.state.form.email}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.email}
+                        error={this.state.errors.email}
+                      />
+                      <Button
+                        className="btn-block mt-3"
+                        color="success"
+                        submit
+                      >
+                        <i className="mdi text-lg mdi-lock-reset mr-2" />Submit
+                      </Button>
+                    </Form>
+                  </Card>
+                </Column>  
+              </Row>
+            </Container>
+          </FadeIn>
         </Suspense>
       </div>
     );

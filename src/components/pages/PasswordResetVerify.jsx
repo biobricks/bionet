@@ -1,4 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
+import FadeIn from 'react-fade-in';
 import { Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
 
@@ -92,67 +93,69 @@ class PasswordResetVerify extends Component {
     return (
       <div className="PasswordResetVerify">
         <Suspense fallback="Loading...">
-          <Container>
-            <Row>
-              <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="lock-question" title="Verify Reset Password" className="mt-3">
-                  <Form 
-                    onSubmit={this.onFormSubmit}
-                  >
-                    {this.state.errors.summary && (
-                      <div className="form-group">
-                        <p className="text-danger">{this.state.errors.summary}</p>
-                      </div>
-                    )}
+          <FadeIn>
+            <Container>
+              <Row>
+                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                  <Card icon="lock-question" title="Verify Reset Password" className="mt-3">
+                    <Form 
+                      onSubmit={this.onFormSubmit}
+                    >
+                      {this.state.errors.summary && (
+                        <div className="form-group">
+                          <p className="text-danger">{this.state.errors.summary}</p>
+                        </div>
+                      )}
 
-                    <p>Enter your verification code sent to you by email.</p>
+                      <p>Enter your verification code sent to you by email.</p>
 
-                    <InputText 
-                      label="Reset Token"
-                      attribute="resetToken"
-                      placeholder="your.reset.token"
-                      value={this.state.form.resetToken}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.resetToken}
-                      error={this.state.errors.resetToken}
-                    />
+                      <InputText 
+                        label="Reset Token"
+                        attribute="resetToken"
+                        placeholder="your.reset.token"
+                        value={this.state.form.resetToken}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.resetToken}
+                        error={this.state.errors.resetToken}
+                      />
 
-                    {this.state.form.resetToken && this.state.form.resetToken.length > 6 && (
-                      <>
+                      {this.state.form.resetToken && this.state.form.resetToken.length > 6 && (
+                        <>
 
-                        <InputPassword
-                          label="New Password"
-                          attribute="newPassword"
-                          placeholder="myNewPassword"
-                          value={this.state.form.newPassword}
-                          onChange={this.onInputChange} 
-                          instructions={this.state.instructions.newPassword}
-                          error={this.state.errors.newPassword}
-                        />
-                        <InputPassword
-                          label="Confirm Password"
-                          attribute="passwordConfirm"
-                          placeholder="password (again)"
-                          value={this.state.form.passwordConfirm}
-                          onChange={this.onInputChange} 
-                          instructions={this.state.instructions.passwordConfirm}
-                          error={this.state.errors.passwordConfirm}
-                        />
+                          <InputPassword
+                            label="New Password"
+                            attribute="newPassword"
+                            placeholder="myNewPassword"
+                            value={this.state.form.newPassword}
+                            onChange={this.onInputChange} 
+                            instructions={this.state.instructions.newPassword}
+                            error={this.state.errors.newPassword}
+                          />
+                          <InputPassword
+                            label="Confirm Password"
+                            attribute="passwordConfirm"
+                            placeholder="password (again)"
+                            value={this.state.form.passwordConfirm}
+                            onChange={this.onInputChange} 
+                            instructions={this.state.instructions.passwordConfirm}
+                            error={this.state.errors.passwordConfirm}
+                          />
 
-                        <Button
-                          className="btn-block mt-3"
-                          color="success"
-                          submit
-                        >
-                          <i className="mdi text-lg mdi-lock-question mr-2" />Submit
-                        </Button>
-                      </>
-                    )}  
-                  </Form>
-                </Card>
-              </Column>  
-            </Row>
-          </Container>
+                          <Button
+                            className="btn-block mt-3"
+                            color="success"
+                            submit
+                          >
+                            <i className="mdi text-lg mdi-lock-question mr-2" />Submit
+                          </Button>
+                        </>
+                      )}  
+                    </Form>
+                  </Card>
+                </Column>  
+              </Row>
+            </Container>
+          </FadeIn>
         </Suspense>
       </div>
     );

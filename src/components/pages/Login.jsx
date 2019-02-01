@@ -1,5 +1,6 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import FadeIn from 'react-fade-in';
 import Api from '../../modules/Api';
 import Auth from '../../modules/Auth';
 
@@ -86,51 +87,53 @@ class Login extends Component {
     return (
       <div className="Login">
         <Suspense fallback="Loading...">
-          <Container>
-            <Row>
-              <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="login-variant" title="Login" className="mt-3">
-                  <Form 
-                    onSubmit={this.onFormSubmit}
-                  >
-                    {this.state.errors.summary && (
-                      <div className="form-group">
-                        <p className="text-danger">{this.state.errors.summary}</p>
-                      </div>
-                    )}
-                    <InputText 
-                      label="Username"
-                      attribute="username"
-                      placeholder="username"
-                      value={this.state.form.username}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.username}
-                      error={this.state.errors.username}
-                    />
-                    <InputPassword
-                      label="Password"
-                      attribute="password"
-                      placeholder="password"
-                      value={this.state.form.password}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.password}
-                      error={this.state.errors.password}
-                    />
-                    <Button
-                      className="btn-block mt-3"
-                      color="success"
-                      submit
+          <FadeIn>
+            <Container>
+              <Row>
+                <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
+                  <Card icon="login-variant" title="Login" className="mt-3">
+                    <Form 
+                      onSubmit={this.onFormSubmit}
                     >
-                      <i className="mdi text-lg mdi-login-variant mr-2" />Login
-                    </Button>
-                    <p className="mt-3 text-center">
-                      <Link to="/password-reset">Forgot Password ?</Link>
-                    </p>
-                  </Form>
-                </Card>
-              </Column>  
-            </Row>
-          </Container>
+                      {this.state.errors.summary && (
+                        <div className="form-group">
+                          <p className="text-danger">{this.state.errors.summary}</p>
+                        </div>
+                      )}
+                      <InputText 
+                        label="Username"
+                        attribute="username"
+                        placeholder="username"
+                        value={this.state.form.username}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.username}
+                        error={this.state.errors.username}
+                      />
+                      <InputPassword
+                        label="Password"
+                        attribute="password"
+                        placeholder="password"
+                        value={this.state.form.password}
+                        onChange={this.onInputChange} 
+                        instructions={this.state.instructions.password}
+                        error={this.state.errors.password}
+                      />
+                      <Button
+                        className="btn-block mt-3"
+                        color="success"
+                        submit
+                      >
+                        <i className="mdi text-lg mdi-login-variant mr-2" />Login
+                      </Button>
+                      <p className="mt-3 text-center">
+                        <Link to="/password-reset">Forgot Password ?</Link>
+                      </p>
+                    </Form>
+                  </Card>
+                </Column>  
+              </Row>
+            </Container>
+          </FadeIn>  
         </Suspense>
       </div>
     );
