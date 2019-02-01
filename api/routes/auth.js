@@ -1,12 +1,12 @@
 const userRequired = require('../modules/apiAccess').userRequired;
 
-module.exports = function(api, passport) {
+module.exports = function(router, passport) {
 
   // interprets the JSON web token sent from the users local storage
   // if the user is not logged in, there will be no json web token in their local storage
   // returns the currently logged in user
   // is loaded on App.componentDidMount.getData on the client
-	api.get('/dashboard', userRequired, (req, res) => {
+	router.get('/dashboard', userRequired, (req, res) => {
 		res.status(200).json({
 			message: "User successfully retrieved from the Database.",
 			user: res.locals.currentUser || {}
@@ -14,7 +14,7 @@ module.exports = function(api, passport) {
 	});	
 
   // interprets new user form
-  api.post('/signup', (req, res, next) => {
+  router.post('/signup', (req, res, next) => {
     const validationResult = validateSignupForm(req.body);
     if (!validationResult.success) {
       return res.status(400).json({
@@ -51,7 +51,7 @@ module.exports = function(api, passport) {
     })(req, res, next);
   });
 
-  api.post('/login', (req, res, next) => {
+  router.post('/login', (req, res, next) => {
     const validationResult = validateLoginForm(req.body);
     if (!validationResult.success) {
       return res.status(400).json({

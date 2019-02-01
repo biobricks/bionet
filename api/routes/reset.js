@@ -5,10 +5,10 @@ const shortid = require('shortid');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(Config.sendgrid.key);
 
-module.exports = function(api) { 
+module.exports = function(router) { 
 
 // post resetToken and newPassword - if valid then save and return current user
-api.post('/reset-password/validate', (req, res) => {
+router.post('/reset-password/validate', (req, res) => {
   let resetToken = req.body.resetToken && req.body.resetToken.length > 5 ? req.body.resetToken : false;
   let newPassword = req.body.newPassword && req.body.newPassword.length > 5 ? req.body.newPassword : false;
   if (resetToken && newPassword) {
@@ -68,7 +68,7 @@ api.post('/reset-password/validate', (req, res) => {
 });
 
 // post user account email address and receive reset password token by email
-api.post('/reset-password', (req, res) => {
+router.post('/reset-password', (req, res) => {
   let email = req.body.email && req.body.email.length > 9 ? req.body.email : false;
   if (email) {
     User.findOne({'email': email}, (error, currentUser) => {

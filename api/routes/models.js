@@ -1,10 +1,10 @@
 const Fetch = require('../modules/fetch');
 const ApiAccess = require("../modules/apiAccess");
 
-module.exports = function(api) {
+module.exports = function(router) {
 
   // wildcard create
-  api.post('/:modelPlural/new', ApiAccess.userRequired, validateModelParam, (req, res) => {
+  router.post('/:modelPlural/new', ApiAccess.userRequired, validateModelParam, (req, res) => {
     let Model = res.locals.Model;
     let newRecord = new Model(req.body);
     newRecord.save()
@@ -29,7 +29,7 @@ module.exports = function(api) {
   });
 
   // wildcard update
-  api.put('/:modelPlural/:recordId/edit', ApiAccess.userRequired, validateModelParam, (req, res) => {
+  router.put('/:modelPlural/:recordId/edit', ApiAccess.userRequired, validateModelParam, (req, res) => {
     let Model = res.locals.Model;
     let jsonResponse;   
     // param 1 - {_id: req.params.recordId} - the id for the findOne
@@ -54,7 +54,7 @@ module.exports = function(api) {
   });
 
   // wildcard delete
-  api.delete('/:modelPlural/:recordId/remove', ApiAccess.userRequired, validateModelParam, (req, res) => {
+  router.delete('/:modelPlural/:recordId/remove', ApiAccess.userRequired, validateModelParam, (req, res) => {
     let Model = res.locals.Model;
     let jsonResponse;
     Model.findOneAndDelete({_id: req.params.recordId}).exec(error => {
@@ -77,7 +77,7 @@ module.exports = function(api) {
   });
 
   // wildcard get one route
-  api.get("/:modelPlural/:recordId", validateModelParam,  (req, res) => {
+  router.get("/:modelPlural/:recordId", validateModelParam,  (req, res) => {
 
       Fetch.fetchOne(res.locals.Model, req.params.recordId)
       .then((result) => {
@@ -110,7 +110,7 @@ module.exports = function(api) {
   });      
 
   // wildcard get all route
-  api.get("/:modelPlural", validateModelParam, (req, res) => {
+  router.get("/:modelPlural", validateModelParam, (req, res) => {
     Fetch.fetchAll(res.locals.Model)
     .then((result) => {
       let jsonResponse = {

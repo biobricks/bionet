@@ -1,6 +1,7 @@
 const Config = require('./config.js'); // api configuration
 const express = require('express'); // require express module
 const api = express(); // instantiate or start express
+const router = express.Router(); // router
 const mongoose = require('mongoose'); // mongoDB object modeling
 const passport = require("passport"); // authentication strategies
 const bearerToken = require("express-bearer-token"); // express json web token middleware
@@ -82,11 +83,12 @@ api.use((req, res, next) => {
 /* Routes              */
 /***********************/
 
-require('./routes/static.js')(api); // static info routes
-require('./routes/auth.js')(api, passport); // user authentication routes
-require('./routes/models.js')(api); // all model routes
-require('./routes/reset.js')(api); // reset password
+require('./routes/static.js')(router); // static info routes
+require('./routes/auth.js')(router, passport); // user authentication routes
+require('./routes/models.js')(router); // all model routes
+require('./routes/reset.js')(router); // reset password
 
+api.use('/api/v1', router); // prepend all routes with /api/v1/
 
 /***********************/
 /* Listen              */
