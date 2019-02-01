@@ -19,10 +19,15 @@
     "shortid": "^2.2.14"
   },
   "scripts": {
-    "start": "concurrently \"nodemon api/server\" \"react-scripts start\"",
+    "start": "npm run build && serve -s build -l 3001",
+    "dev": "concurrently \"nodemon ./api/server\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "db:save": "mkdir -p api/backup && node ./api/lib/save.js",
+    "db:restore": "node ./api/lib/restore.js",
+    "db:clear": "node ./api/lib/clear.js",
+    "db:seed": "node ./api/lib/seed.js"
   },
   "eslintConfig": {
     "extends": "react-app"

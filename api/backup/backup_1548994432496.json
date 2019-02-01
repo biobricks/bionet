@@ -1,0 +1,48 @@
+{
+  "createdAt": 1548994432496,
+  "users": [
+    {
+      "createdAt": "Wed Jan 30 2019 19:46:21 GMT-0800 (PST)",
+      "updatedAt": "Wed Jan 30 2019 19:46:21 GMT-0800 (PST)",
+      "isAdmin": true,
+      "imageUrl": "",
+      "resetToken": "AiuZx753_",
+      "_id": "5c526fb63d531d679674d17a",
+      "username": "mstewart",
+      "password": "$2a$10$5M537ZLfcxpN.XLn72iOg.sUFrci8qFHcETELv5.RFZz3We7qzP/K",
+      "email": "matthew.stewart.mi@gmail.com",
+      "name": "Matthew Stewart",
+      "__v": 0
+    },
+    {
+      "createdAt": "Wed Jan 30 2019 20:57:26 GMT-0800 (PST)",
+      "updatedAt": "Wed Jan 30 2019 20:57:26 GMT-0800 (PST)",
+      "isAdmin": false,
+      "imageUrl": "",
+      "resetToken": "",
+      "_id": "5c52817a02a68073ea805e52",
+      "username": "exampleuser",
+      "password": "$2a$10$npg1rAvEwlzngwTr1mJ4lu3JyPFZR5l6ZQk5KctXTj1acfR0Y/iQ6",
+      "email": "user@example.com",
+      "name": "Example User",
+      "__v": 0
+    },
+    {
+      "createdAt": "Wed Jan 30 2019 20:57:26 GMT-0800 (PST)",
+      "updatedAt": "Wed Jan 30 2019 20:57:26 GMT-0800 (PST)",
+      "isAdmin": false,
+      "imageUrl": "",
+      "resetToken": "",
+      "_id": "5c52825102a68073ea805e53",
+      "username": "exampleuser2",
+      "password": "$2a$10$0/h9RPkaLKrvKHxJt9cOMeRSB6zx1dlusSr2FmMu4brJeHKtQohJa",
+      "email": "user2@example.come",
+      "name": "Example User 2",
+      "__v": 0
+    }
+  ],
+  "labs": [],
+  "containers": [],
+  "physicals": [],
+  "virtuals": []
+}

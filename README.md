@@ -19,4 +19,4 @@ The development process can be followed step-by-step by reviewing the 'walkthrou
 10. [API Models](https://github.com/biobricks/bionet/blob/master/walkthrough/10.api.3.md) - Expand the database models to include Labs, Containers, Physicals and Virtuals.  
 11. [API Reset Password](https://github.com/biobricks/bionet/blob/master/walkthrough/11.api.4.md) - Add password reset and email features to the API.  
 12. [React Reset Password](https://github.com/biobricks/bionet/blob/master/walkthrough/12.react.6.md) - Add password and email features to the React client.  
-
+13. [Database Management](https://github.com/biobricks/bionet/blob/master/walkthrough/13.api.5.md) - Add NPM scripts for seeding, clearing backing up and restoring data from the database.  
