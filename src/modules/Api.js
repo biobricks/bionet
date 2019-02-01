@@ -80,7 +80,7 @@ async function logoutCurrentUser() {
 
 async function get(endpoint) {
   try {  
-    let request = new Request(`${Config.api.endpoint}/${endpoint}`, { method: 'GET', mode: 'no-cors' });
+    let request = new Request(`http://localhost:3001/${endpoint}`, { method: 'GET' });
     let response = await fetch(request);
     let result = response.json();
     return result;

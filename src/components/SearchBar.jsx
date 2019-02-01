@@ -41,16 +41,17 @@ class SearchBar extends Component {
   async getData() {
     try {
       let records = [];
-
+      let labs = [];
       let labsResponse = await Api.get("labs");
-      for(let i = 0; i < labsResponse.data.length; i++){
-        labsResponse.data[i]['type'] = 'Lab';
-        labsResponse.data[i]['icon'] = 'teach';
-        labsResponse.data[i]['label'] = `${labsResponse.data[i].name}`;
+      if (labsResponse.data) {
+        for(let i = 0; i < labsResponse.data.length; i++){
+          labsResponse.data[i]['type'] = 'Lab';
+          labsResponse.data[i]['icon'] = 'teach';
+          labsResponse.data[i]['label'] = `${labsResponse.data[i].name}`;
+        }
+        labs = labsResponse.data;
+        records = records.concat(labsResponse.data);
       }
-      const labs = labsResponse.data;
-      records = records.concat(labsResponse.data);
-
       let containersResponse = await Api.get("containers");
   
       for(let i = 0; i < containersResponse.data.length; i++){

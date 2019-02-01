@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy } from 'react'; 
 import { Link } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
-import Api from '../../modules/Api';
+//import Api from '../../modules/Api';
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
@@ -14,29 +14,6 @@ class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.getData = this.getData.bind(this);
-  }
-  
-  async getData() {
-    try {
-      const res = await Api.get('');
-      if (this.props.debug) {
-        console.log('Landing.getData.res', res);
-      }  
-      return res;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  componentDidMount() {
-    this.getData()
-    .then((result) => {
-      this.setState(result);
-    })
-    .catch((error) => {
-      console.error('Landing.componentDidMount', error);
-    });
   }
 
   render() {
