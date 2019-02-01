@@ -23,16 +23,18 @@ class SearchBar extends Component {
   // async getData() {
   //   try {
   //     const labsRes = await Api.get('labs');
-  //     const containersRes = await Api.get('containers');
-  //     const physicalsRes = await Api.get('physicals');
-  //     const virtualsRes = await Api.get('virtuals');
+  //     // const containersRes = await Api.get('containers');
+  //     // const physicalsRes = await Api.get('physicals');
+  //     // const virtualsRes = await Api.get('virtuals');
   //     if (this.props.debug) {
-  //       console.log('SearchBar.getData.res.labs', labsRes);
-  //       console.log('SearchBar.getData.res.containers', containersRes);
-  //       console.log('SearchBar.getData.res.physicals', physicalsRes);
-  //       console.log('SearchBar.getData.res.virtuals', virtualsRes);
+  //       console.log('SearchBar.getData.res.labs', labsRes.data);
+  //       // console.log('SearchBar.getData.res.containers', containersRes);
+  //       // console.log('SearchBar.getData.res.physicals', physicalsRes);
+  //       // console.log('SearchBar.getData.res.virtuals', virtualsRes);
   //     }  
-  //     return labsRes;
+  //     return {
+  //       records: labsRes.data
+  //     }  
   //   } catch (error) {
   //     console.error(error);
   //   }
@@ -41,6 +43,7 @@ class SearchBar extends Component {
   async getData() {
     try {
       let records = [];
+
       let labs = [];
       let labsResponse = await Api.get("labs");
       if (labsResponse.data) {
@@ -52,19 +55,20 @@ class SearchBar extends Component {
         labs = labsResponse.data;
         records = records.concat(labsResponse.data);
       }
+
       let containersResponse = await Api.get("containers");
-  
+      let containers;
       for(let i = 0; i < containersResponse.data.length; i++){
         containersResponse.data[i]['type'] = 'Container';
         containersResponse.data[i]['icon'] = 'grid';
         let label = `${containersResponse.data[i].lab.name}`;
-        console.log(`container ${i + 1}`, containersResponse.data[i].breadcrumbs);
+        //console.log(`container ${i + 1}`, containersResponse.data[i].breadcrumbs);
         for(let j = 0; j < containersResponse.data[i].breadcrumbs.length; j++){
           label += ` / ${containersResponse.data[i].breadcrumbs[j].name}`;
         }
         containersResponse.data[i]['label'] = label;
       }
-      const containers = containersResponse.data;
+      containers = containersResponse.data;
       records = records.concat(containersResponse.data);
 
       let physicalsResponse = await Api.get("physicals");
@@ -121,6 +125,7 @@ class SearchBar extends Component {
                 // console.log('option.label', option)
                 return option.label; 
               }}
+              // labelKey="name"
               placeholder={recordsExist ? "<search here>" : "Loading Search Data..."}
               options={this.state.records}
             />
