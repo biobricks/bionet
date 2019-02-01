@@ -83,6 +83,7 @@ async function get(endpoint) {
     let request = new Request(`${Config.api.endpoint}/${endpoint}`, { method: 'GET' });
     let response = await fetch(request);
     let result = response.json();
+    console.log('Api.get.result', result);
     return result;
   } catch (error) {
     console.log('Api.get', error);
