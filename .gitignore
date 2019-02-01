@@ -24,3 +24,7 @@ yarn-error.log*
 
 # API configuration
 config.js
+
+# Backup
+/api/backup
+/api/backup/*

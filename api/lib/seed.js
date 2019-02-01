@@ -99,8 +99,10 @@ async function seedExampleData() {
       users: [adminUser._id], // adminuser is member
       joinRequests: [demoUser._id] // demouser has requested to join
     };
+    console.log('Lab Object Pre Save', lab1Obj);
     const lab1 = await createModel('Lab', lab1Obj);
-    
+    await lab1.save();
+
     // create freezer1 in lab
     const freezer1Obj = {
       createdBy: adminUser._id, // adminuser is creator
@@ -162,6 +164,7 @@ async function createLab(labObj) {
     console.log(`  ${lab.name} Saved`);
     return lab;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
@@ -172,9 +175,9 @@ async function createModel(modelName, modelObj) {
   try {
     const Model = require(`${currentDir}/api/models/${modelName}`);
     const newRecord = new Model(modelObj);
-    //let createMessage = modelName === 'User' ? `Creating ${modelObj.username}` : `Creating ${modelObj.name}`
+    let createMessage = modelName === 'User' ? `Creating ${modelObj.username}` : `Creating ${modelObj.name}`
     const name = modelName === 'User' ? modelObj.username : modelObj.name;
-    //console.log(createMessage);
+    console.log(createMessage);
     return newRecord;
   } catch (error) {
     throw error;

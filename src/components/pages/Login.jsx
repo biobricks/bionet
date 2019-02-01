@@ -128,6 +128,9 @@ class Login extends Component {
                       <p className="mt-3 text-center">
                         <Link to="/password-reset">Forgot Password ?</Link>
                       </p>
+                      <p className="mt-3 text-center">
+                        <Link to="/signup">Create Account</Link>
+                      </p>
                     </Form>
                   </Card>
                 </Column>  
