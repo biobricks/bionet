@@ -22,7 +22,7 @@
     "shortid": "^2.2.14"
   },
   "scripts": {
-    "start": "npm run build && serve -s build -l 3001",
+    "start": "npm run build && serve -s build -l 9001",
     "dev": "concurrently \"nodemon ./api/server\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
