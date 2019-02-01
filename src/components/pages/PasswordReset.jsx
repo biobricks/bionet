@@ -1,7 +1,6 @@
 import React, { Component, Suspense, lazy } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
-import Auth from '../../modules/Auth';
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
@@ -10,26 +9,22 @@ const Card = lazy(() => import('../bootstrap/components/Card'));
 const Button = lazy(() => import('../bootstrap/components/Button'));
 const Form = lazy(() => import('../bootstrap/forms/Form'));
 const InputText = lazy(() => import('../bootstrap/forms/InputText'));
-const InputPassword = lazy(() => import('../bootstrap/forms/InputPassword'));
 
-class Login extends Component {
+class PasswordReset extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       redirect: false,
       form: {
-        username: "",
-        password: ""
+        email: ""
       },
       errors: {
         summary: null,
-        username: null,
-        password: null
+        email: null
       },
       instructions: {
-        username: null,
-        password: null
+        email: null
       }
     };
     this.onInputChange = this.onInputChange.bind(this);
@@ -48,48 +43,40 @@ class Login extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.state.form;
-    const username = form.username;
-    const usernameValid = username && username.length > 4;
-    const password = form.password; 
-    const passwordValid = password && password.length > 6;
-    const formValid = usernameValid && passwordValid;
+    const email = form.email;
+    const emailValid = email && email.length > 9;
+    const formValid = emailValid;
     let errors = this.state.errors;
     let instructions = this.state.instructions;
     if (formValid) {
-      Api.login(this.state.form)
+      Api.postPublic('reset-password', this.state.form)
       .then((result) => {
-        this.props.debug && console.log('Login.onFormSubmit.Api.login.result', result);
+        this.props.debug && console.log('PasswordReset.onFormSubmit.result', result);
         if (result.success) {
-          Auth.authenticateUser(result.token);
-          this.props.refresh();
           this.setState({ redirect: true });
         } else {
-          form.username = "";
-          form.password = "";
+          form.email = "";
           errors.summary = result.message;
-          errors.username = null;
-          errors.password = null;
-          instructions.username = null;
-          instructions.password = null;
+          errors.email = null;
+          instructions.email = null;
           this.setState({form, errors, instructions});
         }  
       });
     } else {
-      if (!usernameValid) { errors.username = "You must provide a valid username." } else { instructions.username = "Username Valid" }
-      if (!passwordValid) { errors.password = "You must provide a valid password." } else { instructions.password = "Password Valid" }
+      if (!emailValid) { errors.email = "You must provide a valid email." } else { instructions.email = "Email Valid" }
       this.setState({form, errors, instructions});
     }
   }
 
   render() {
-    if (this.state.redirect) { return <Redirect to="/" /> }
+    if (this.state.redirect) { return <Redirect to="/password-reset/verify" /> }
     return (
-      <div className="Login">
+      <div className="PasswordReset">
         <Suspense fallback="Loading...">
           <Container>
             <Row>
               <Column col="12" colSm="10" colMd="6" colLg="5" className="ml-auto mr-auto">
-                <Card icon="login-variant" title="Login" className="mt-3">
+                <Card icon="lock-reset" title="Reset Password" className="mt-3">
                   <Form 
                     onSubmit={this.onFormSubmit}
                   >
@@ -98,34 +85,25 @@ class Login extends Component {
                         <p className="text-danger">{this.state.errors.summary}</p>
                       </div>
                     )}
+
+                    <p>Enter your email associated with your account and you will be sent instructions on how to reset your password.</p>
+
                     <InputText 
-                      label="Username"
-                      attribute="username"
-                      placeholder="username"
-                      value={this.state.form.username}
+                      label="Email"
+                      attribute="email"
+                      placeholder="your.account.email@example.com"
+                      value={this.state.form.email}
                       onChange={this.onInputChange} 
-                      instructions={this.state.instructions.username}
-                      error={this.state.errors.username}
-                    />
-                    <InputPassword
-                      label="Password"
-                      attribute="password"
-                      placeholder="password"
-                      value={this.state.form.password}
-                      onChange={this.onInputChange} 
-                      instructions={this.state.instructions.password}
-                      error={this.state.errors.password}
+                      instructions={this.state.instructions.email}
+                      error={this.state.errors.email}
                     />
                     <Button
                       className="btn-block mt-3"
                       color="success"
                       submit
                     >
-                      <i className="mdi text-lg mdi-login-variant mr-2" />Login
+                      <i className="mdi text-lg mdi-lock-reset mr-2" />Submit
                     </Button>
-                    <p className="mt-3 text-center">
-                      <Link to="/password-reset">Forgot Password ?</Link>
-                    </p>
                   </Form>
                 </Card>
               </Column>  
@@ -138,4 +116,4 @@ class Login extends Component {
 
 }
 
-export default Login;
+export default PasswordReset;

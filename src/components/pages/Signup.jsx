@@ -1,5 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Api from '../../modules/Api';
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
@@ -181,6 +181,9 @@ class Signup extends Component {
                     >
                       <i className="mdi text-lg mdi-account-plus mr-2" />Sign Up
                     </Button>
+                    <p className="mt-3 text-center">
+                      <Link to="/login">Have An Account Already?</Link>
+                    </p>
                   </Form>
                 </Card>
               </Column>  

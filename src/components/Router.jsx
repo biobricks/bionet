@@ -3,17 +3,21 @@ import { Switch, Route } from 'react-router-dom';
 import Page from './pages/Page';
 import RouteMessageCard from './pages/RouteMessageCard';
 
-const Landing = lazy(() => import('./pages/Landing'));
+const PasswordReset = lazy(() => import('./pages/PasswordReset'));
+const PasswordResetVerify = lazy(() => import('./pages/PasswordResetVerify'));
 const About = lazy(() => import('./pages/About'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const Profile = lazy(() => import('./pages/Profile'));
+const Landing = lazy(() => import('./pages/Landing'));
 
 class Router extends Component {
   render () {
     return (
       <div className="Router">
         <Switch>
+          <Route exact path="/password-reset/verify" render={(props) => <Page {...props} {...this.props} PageComponent={PasswordResetVerify} /> } />
+          <Route exact path="/password-reset" render={(props) => <Page {...props} {...this.props} PageComponent={PasswordReset} /> } />
           <Route exact path="/about" render={(props) => <Page {...props} {...this.props} PageComponent={About} /> } />
           <Route exact path="/login" render={(props) => <Page {...props} {...this.props} PageComponent={Login}/> } />
           <Route exact path="/signup" render={(props) => <Page {...props} {...this.props} PageComponent={Signup} /> } />

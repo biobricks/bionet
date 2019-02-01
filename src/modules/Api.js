@@ -16,7 +16,7 @@ async function getCurrentUser() {
 
 async function login(form) {
   try {  
-    let request = new Request(`${Config.apiEndpoint}/login`, {
+    let request = new Request(`${Config.api.endpoint}/login`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: new Headers({
@@ -35,7 +35,7 @@ async function login(form) {
 
 async function signup(form) {
   try {  
-    let request = new Request(`${Config.apiEndpoint}/signup`, {
+    let request = new Request(`${Config.api.endpoint}/signup`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: new Headers({
@@ -55,7 +55,7 @@ async function signup(form) {
 
 async function loginCurrentUser() {
   try {  
-    let request = new Request(`${Config.apiEndpoint}/dashboard`, {
+    let request = new Request(`${Config.api.endpoint}/dashboard`, {
       method: 'GET',
       headers: new Headers({
         'Authorization': `Bearer ${Auth.getToken()}`
@@ -80,7 +80,7 @@ async function logoutCurrentUser() {
 
 async function get(endpoint) {
   try {  
-    let request = new Request(`${Config.apiEndpoint}/${endpoint}`, { method: 'GET' });
+    let request = new Request(`${Config.api.endpoint}/${endpoint}`, { method: 'GET' });
     let response = await fetch(request);
     let result = response.json();
     return result;
@@ -91,7 +91,7 @@ async function get(endpoint) {
 
 async function post(endpoint, form) {
   try {  
-    let request = new Request(`${Config.apiEndpoint}/${endpoint}`, {
+    let request = new Request(`${Config.api.endpoint}/${endpoint}`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: new Headers({
@@ -108,6 +108,25 @@ async function post(endpoint, form) {
   } 
 }
 
-let api = { getCurrentUser, get, post, loginCurrentUser, logoutCurrentUser, login, signup };
+async function postPublic(endpoint, form) {
+  try {  
+    let request = new Request(`${Config.api.endpoint}/${endpoint}`, {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Auth.getToken()}`
+      })
+    });
+    let response = await fetch(request);
+    let result = response.json();
+    return result;
+  } catch (error) {
+    console.log('Api.postPublic', error);
+  } 
+}
+
+let api = { getCurrentUser, get, post, postPublic, loginCurrentUser, logoutCurrentUser, login, signup };
 
 export default api;
