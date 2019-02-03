@@ -13,7 +13,11 @@ const modelSchema = mongoose.Schema({
   parentY      : { type: Number, default: 1 },
   virtual      : { type: String, ref: "Virtual", required: true },
   width        : { type: Number, default: 1 },
-  height       : { type: Number, default: 1 }
+  height       : { type: Number, default: 1 },
+  breadcrumbs  : [],
+  model        : { type: String, default: "Physical" },
+  endpoint     : { type: String, default: "physicals" },
+  icon         : { type: String, default: "flask" }
 });
 
 module.exports = mongoose.model("Physical", modelSchema);

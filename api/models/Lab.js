@@ -12,7 +12,10 @@ const modelSchema = mongoose.Schema({
   children     : { type: Object, default: {} },
   users        : [{ type: String, ref: "User"}],
   joinRequests : [{ type: String, ref: "User"}],
-  breadcrumbs  : []
+  breadcrumbs  : [],
+  model        : { type: String, default: "Lab" },
+  endpoint     : { type: String, default: "labs" },
+  icon         : { type: String, default: "teach" }
 });
 
 module.exports = mongoose.model('Lab', modelSchema);

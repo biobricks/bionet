@@ -216,7 +216,8 @@ async function createLab(name, creatorId, innerWidth=15, innerHeight=15, users=[
     lab.breadcrumbs.push({
       _id: lab._id,
       name: lab.name,
-      model: "Lab"
+      model: "Lab",
+      icon: "teach"
     });
     lab = await lab.save();
     // freezers in lab
@@ -260,7 +261,8 @@ async function createContainer(name, creatorId, labId, parentId, parentName, par
     container.breadcrumbs.push({
       _id: container._id,
       name: container.name,
-      model: "Container"
+      model: "Container",
+      icon: "grid"
     });
     container = await container.save();
     return container;

@@ -19,7 +19,10 @@ const modelSchema = mongoose.Schema({
   children     : Object,
   category     : { type: String, default: "" },
   bgColor      : { type: String, default: "#00D1FD" },
-  breadcrumbs  : []
+  breadcrumbs  : [],
+  model        : { type: String, default: "Container" },
+  endpoint     : { type: String, default: "containers" },
+  icon         : { type: String, default: "grid" }
 });
 
 module.exports = mongoose.model("Container", modelSchema);

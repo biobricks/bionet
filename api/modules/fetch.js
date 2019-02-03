@@ -34,7 +34,7 @@ const mongoFetch = {
           breadcrumbArray = [];
           //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
           //results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
-          results[i]['type'] = 'Lab';
+          results[i]['model'] = 'Lab';
           results[i]['endpoint'] = 'labs';
         }
         break;
@@ -60,7 +60,7 @@ const mongoFetch = {
           breadcrumbArray = [];
           //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
           //results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
-          results[i]['type'] = 'Container';
+          results[i]['model'] = 'Container';
           results[i]['endpoint'] = 'containers';
         }
         break;
@@ -86,7 +86,7 @@ const mongoFetch = {
         for(let i = 0; i < results.length; i++) {
           breadcrumbArray = [];
           //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
-          results[i]['type'] = 'Physical';
+          results[i]['model'] = 'Physical';
           results[i]['endpoint'] = 'physicals';
         }  
         break; 
@@ -101,14 +101,14 @@ const mongoFetch = {
         //   select: '_id username'
         // });  
         for(let i = 0; i < results.length; i++) {
-          results[i]['type'] = 'Virtual';
+          results[i]['model'] = 'Virtual';
           results[i]['endpoint'] = 'virtuals';
         } 
         break; 
       case User:
         results = await Model.find().select({ password: 0, email: 0, name: 0, settings: 0});
         for(let i = 0; i < results.length; i++) {
-          results[i]['type'] = 'User';
+          results[i]['model'] = 'User';
           results[i]['endpoint'] = 'users';
         }   
         break;      
@@ -143,7 +143,7 @@ const mongoFetch = {
             select: '_id username'
           });
           //result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
-          result['type'] = 'Lab';
+          result['model'] = 'Lab';
           result['endpoint'] = 'labs';
           break;
         case Container:
@@ -167,7 +167,7 @@ const mongoFetch = {
           //result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
           breadcrumbArray = [];
           //result['breadcrumbs'] = await getBreadcrumbs(result._id);
-          result['type'] = 'Container';
+          result['model'] = 'Container';
           result['endpoint'] = 'containers';
           break;  
         case Physical:
@@ -190,7 +190,7 @@ const mongoFetch = {
           .populate('virtual'); 
           breadcrumbArray = [];
           //result['breadcrumbs'] = await getBreadcrumbs(result._id);
-          result['type'] = 'Physical';
+          result['model'] = 'Physical';
           result['endpoint'] = 'physicals'; 
           break;  
         case Virtual:
@@ -203,12 +203,12 @@ const mongoFetch = {
             path: 'updatedBy',
             select: '_id username'
           });  
-          result['type'] = 'Virtual';
+          result['model'] = 'Virtual';
           result['endpoint'] = 'virtuals';
           break;  
         case User:
           result = await Model.findOne({_id: id}).select({ password: 0, email: 0, name: 0, settings: 0});  
-          result['type'] = 'User';
+          result['model'] = 'User';
           result['endpoint'] = 'users';
           break;       
         default:

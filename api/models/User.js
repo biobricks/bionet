@@ -10,7 +10,11 @@ const userSchema = mongoose.Schema({
   name         : { type: String, required: true },
   email        : { type: String, required: true, index: { unique: true }},
   imageUrl     : { type: String, default: "" },
-  resetToken   : { type: String, default: ""}
+  resetToken   : { type: String, default: ""},
+  breadcrumbs  : [],
+  model        : { type: String, default: "User" },
+  endpoint     : { type: String, default: "users" },
+  icon         : { type: String, default: "account" }
 });
 
 userSchema.methods.comparePassword = function(password, callback) {

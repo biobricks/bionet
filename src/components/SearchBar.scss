@@ -1,4 +1,10 @@
 .SearchBar {
   * { border-radius: 0px !important; } 
+  ul { padding: 0; }
+  a.dropdown-item, rbt-menu.dropdown-menu { padding: 0; }
+  ol.breadcrumb { margin: 0 }
+  .input-group-text { border-color: rgb(4, 32, 13); }
+  .breadcrumb-item.inactive { color: rgb(160,160,160)}
+  .breadcrumb-item.active { color: rgb(0,150,200)}
   .form-control, ul.dropdown-menu { border-radius: 0px !important; } 
 }

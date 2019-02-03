@@ -13,7 +13,11 @@ const modelSchema = mongoose.Schema({
   sequence     : { type: String, default: "" },
   fgSubmitted  : { type: Boolean, default: false },
   fgStage      : { type: Number, default: 0 },
-  category     : { type: String, default: ""}
+  category     : { type: String, default: ""},
+  breadcrumbs  : [],
+  model        : { type: String, default: "Virtual" },
+  endpoint     : { type: String, default: "virtuals" },
+  icon         : { type: String, default: "dna" }
 });
 
 module.exports = mongoose.model("Virtual", modelSchema);

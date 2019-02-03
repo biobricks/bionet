@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react'; 
 import Api from '../modules/Api';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { Typeahead, Menu, MenuItem } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 import './SearchBar.scss';
@@ -74,7 +74,7 @@ class SearchBar extends Component {
         <Suspense fallback="Loading..."> 
           <div className="input-group mt-3">
             <div className="input-group-prepend">
-              <span className="input-group-text">
+              <span className="input-group-text bg-dark text-light">
                 <i className="mdi mdi-magnify mr-2" />Search
               </span>
             </div>
@@ -82,20 +82,46 @@ class SearchBar extends Component {
               className=""
               bsSize="large"
               isLoading={this.state.isLoading}
-              labelKey={(option) => {
-                let breadcrumbString = "";
-                for(let i = 0; i < option.breadcrumbs.length; i++){
-                  let breadcrumb = option.breadcrumbs[i];
-                  breadcrumbString += ` ${breadcrumb.name} `;
-                  if (i !== (option.breadcrumbs.length - 1)) { 
-                    breadcrumbString += ` > `;
-                  }
-                }
-                return breadcrumbString;
-              }}
-              // labelKey="name"
+              // labelKey={(option) => {
+              //   let breadcrumbString = "";
+              //   for(let i = 0; i < option.breadcrumbs.length; i++){
+              //     let breadcrumb = option.breadcrumbs[i];
+              //     breadcrumbString += ` ${breadcrumb.name} `;
+              //     if (i !== (option.breadcrumbs.length - 1)) { 
+              //       breadcrumbString += ` > `;
+              //     }
+              //   }
+              //   return breadcrumbString;
+              // }}
+              labelKey="name"
               placeholder={this.state.isLoading ? "Loading..." : "<search here>"}
               options={this.state.records}
+              renderMenu={(results, menuProps) => {
+                const searchResults = results.map((result, index) => {
+                  const resultBreadcrumbs = result.breadcrumbs.map((crumb, crumbIndex) => {
+                    const isActive = crumbIndex === result.breadcrumbs.length - 1;
+                    return (
+                      <li className={`breadcrumb-item ${isActive ? 'active' : 'inactive'}`}>
+                        <i className={`mdi mdi-${crumb.icon} ml-1`}/>{crumb.name}
+                      </li>
+                    );
+                  });
+                  return (
+                    <MenuItem option={result} position={index}>
+                      <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                          {resultBreadcrumbs}
+                        </ol>
+                      </nav>
+                    </MenuItem>                      
+                  );
+                });                
+                return (
+                  <Menu {...menuProps}>
+                    {searchResults}
+                  </Menu>
+                );
+              }}
             />
           </div>
         </Suspense>
