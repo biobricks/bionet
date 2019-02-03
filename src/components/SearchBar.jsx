@@ -80,21 +80,10 @@ class SearchBar extends Component {
             </div>
             <Typeahead
               className=""
-              bsSize="large"
+              //bsSize="large"
               isLoading={this.state.isLoading}
-              // labelKey={(option) => {
-              //   let breadcrumbString = "";
-              //   for(let i = 0; i < option.breadcrumbs.length; i++){
-              //     let breadcrumb = option.breadcrumbs[i];
-              //     breadcrumbString += ` ${breadcrumb.name} `;
-              //     if (i !== (option.breadcrumbs.length - 1)) { 
-              //       breadcrumbString += ` > `;
-              //     }
-              //   }
-              //   return breadcrumbString;
-              // }}
               labelKey="name"
-              placeholder={this.state.isLoading ? "Loading..." : "<search here>"}
+              placeholder={this.state.isLoading ? "Loading..." : "Labs, Containers, Virtual & Physical Samples..."}
               options={this.state.records}
               renderMenu={(results, menuProps) => {
                 const searchResults = results.map((result, index) => {
