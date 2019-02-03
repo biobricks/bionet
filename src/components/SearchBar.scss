@@ -1,6 +1,7 @@
 .SearchBar {
   * { border-radius: 0px !important; } 
   ul { padding: 0; }
+  li.disabled { padding: 1.2em; }
   a.dropdown-item, rbt-menu.dropdown-menu { padding: 0; }
   ol.breadcrumb { margin: 0 }
   .input-group-text { border-color: rgb(4, 32, 13); }
