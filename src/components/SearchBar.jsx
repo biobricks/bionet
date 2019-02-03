@@ -1,5 +1,4 @@
 import React, { Component, Suspense } from 'react'; 
-import FadeIn from 'react-fade-in';
 import Api from '../modules/Api';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -11,102 +10,58 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
+      include: {
+        labs: true,
+        containers: true,
+        virtuals: false,
+        physicals: false
+      },
       labs: [],
       containers: [],
       physicals: [],
       virtuals: [],
-      records: []
+      records: [],
+      selectedRecord: {}
     };
+    this.getAllModel = this.getAllModel.bind(this);
     this.getData = this.getData.bind(this);
   }
   
-  // async getData() {
-  //   try {
-  //     const labsRes = await Api.get('labs');
-  //     // const containersRes = await Api.get('containers');
-  //     // const physicalsRes = await Api.get('physicals');
-  //     // const virtualsRes = await Api.get('virtuals');
-  //     if (this.props.debug) {
-  //       console.log('SearchBar.getData.res.labs', labsRes.data);
-  //       // console.log('SearchBar.getData.res.containers', containersRes);
-  //       // console.log('SearchBar.getData.res.physicals', physicalsRes);
-  //       // console.log('SearchBar.getData.res.virtuals', virtualsRes);
-  //     }  
-  //     return {
-  //       records: labsRes.data
-  //     }  
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  async getAllModel(namePlural) {
+    try {
+      let records = this.state.records;
+      const res = await Api.get(namePlural);
+      const success = Object.keys(res).indexOf('data') > -1;
+      const data = success ? res.data : [];
+      records = records.concat(data);
+      if (this.props.debug) { console.log(`Search | ${namePlural}: ${data.length} | records: ${records.length}`) }
+      let newState = { records };
+      newState[`${namePlural}`] = data;
+      this.setState(newState);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async getData() {
-    try {
-      let records = [];
-
-      let labs = [];
-      let labsResponse = await Api.get("labs");
-      if (labsResponse.data) {
-        for(let i = 0; i < labsResponse.data.length; i++){
-          labsResponse.data[i]['type'] = 'Lab';
-          labsResponse.data[i]['icon'] = 'teach';
-          labsResponse.data[i]['label'] = `${labsResponse.data[i].name}`;
-        }
-        labs = labsResponse.data;
-        records = records.concat(labsResponse.data);
+    try {  
+      const attrs = Object.keys(this.state.include);
+      for(let i = 0; i < attrs.length; i++){
+        const attr = attrs[i];
+        const isIncluded = this.state.include[attr];
+        isIncluded && await this.getAllModel(attr);
       }
-
-      let containersResponse = await Api.get("containers");
-      let containers;
-      for(let i = 0; i < containersResponse.data.length; i++){
-        containersResponse.data[i]['type'] = 'Container';
-        containersResponse.data[i]['icon'] = 'grid';
-        let label = `${containersResponse.data[i].lab.name}`;
-        //console.log(`container ${i + 1}`, containersResponse.data[i].breadcrumbs);
-        for(let j = 0; j < containersResponse.data[i].breadcrumbs.length; j++){
-          label += ` / ${containersResponse.data[i].breadcrumbs[j].name}`;
-        }
-        containersResponse.data[i]['label'] = label;
-      }
-      containers = containersResponse.data;
-      records = records.concat(containersResponse.data);
-
-      let physicalsResponse = await Api.get("physicals");
-      for(let i = 0; i < physicalsResponse.data.length; i++){
-        physicalsResponse.data[i]['type'] = 'Physical';
-        physicalsResponse.data[i]['icon'] = 'flask';
-        physicalsResponse.data[i]['label'] = `${physicalsResponse.data[i].lab.name} / ${physicalsResponse.data[i].name}`;
-      }
-      const physicals = physicalsResponse.data;
-      records = records.concat(physicalsResponse.data);
-
-      let virtualsResponse = await Api.get("virtuals");
-      for(let i = 0; i < virtualsResponse.data.length; i++){
-        virtualsResponse.data[i]['type'] = 'Virtual';
-        virtualsResponse.data[i]['icon'] = 'dna';
-        virtualsResponse.data[i]['label'] = `${virtualsResponse.data[i].name}`;
-      }
-      const virtuals = virtualsResponse.data;
-      records = records.concat(virtualsResponse.data);
-
-      const result = {
-        labs,
-        containers,
-        physicals,
-        virtuals,
-        records
-      };
-
-      return result;     
+      return true;
     } catch (error) {
-      console.log('Search.getData', error);
+      console.error(error);
     }
   }
 
   componentDidMount() {
     this.getData()
     .then((result) => {
-      this.setState(result);
+      this.setState({ isLoading: false });
     })
     .catch((error) => {
       console.error('SearchBar.componentDidMount', error);
@@ -114,22 +69,35 @@ class SearchBar extends Component {
   }
 
   render() {
-    const recordsExist = this.state.records.length > 0; 
     return (
       <div className="SearchBar">
-        <Suspense fallback="Loading...">
-          <FadeIn>
+        <Suspense fallback="Loading..."> 
+          <div className="input-group mt-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">
+                <i className="mdi mdi-magnify mr-2" />Search
+              </span>
+            </div>
             <Typeahead
-              className="mt-3"
+              className=""
+              bsSize="large"
+              isLoading={this.state.isLoading}
               labelKey={(option) => {
-                // console.log('option.label', option)
-                return option.label; 
+                let breadcrumbString = "";
+                for(let i = 0; i < option.breadcrumbs.length; i++){
+                  let breadcrumb = option.breadcrumbs[i];
+                  breadcrumbString += ` ${breadcrumb.name} `;
+                  if (i !== (option.breadcrumbs.length - 1)) { 
+                    breadcrumbString += ` > `;
+                  }
+                }
+                return breadcrumbString;
               }}
               // labelKey="name"
-              placeholder={recordsExist ? "<search here>" : "Loading Search Data..."}
+              placeholder={this.state.isLoading ? "Loading..." : "<search here>"}
               options={this.state.records}
             />
-          </FadeIn>
+          </div>
         </Suspense>
       </div>
     );

@@ -11,7 +11,8 @@ const modelSchema = mongoose.Schema({
   innerHeight  : { type: Number, default: 1, min: 1 },
   children     : { type: Object, default: {} },
   users        : [{ type: String, ref: "User"}],
-  joinRequests : [{ type: String, ref: "User"}]
+  joinRequests : [{ type: String, ref: "User"}],
+  breadcrumbs  : []
 });
 
 module.exports = mongoose.model('Lab', modelSchema);

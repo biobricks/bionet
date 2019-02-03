@@ -35,7 +35,8 @@ async function seedDatabase() {
     connection = await database.connect();
 
     // recursive function to seed example data
-    await seedExampleData();
+    // await seedExampleData(); // old
+    await seedTestData(); // new
 
     return {
       success: true,
@@ -53,6 +54,31 @@ async function seedDatabase() {
 }
 
 // parent async call in example data creation 
+// new
+async function seedTestData() {
+  try {
+    
+    // clear the database first
+    await clearDatabase();
+
+    // create users
+    let demoUser = await createUser('demouser', 'Demo User');
+    let adminUser = await createUser('adminuser', 'Admin User', true);
+
+    // create labs
+    let lab1 = await createLab('Lab 1', demoUser._id, 15, 15, [demoUser._id], joinRequests=[adminUser._id]);
+    let lab2 = await createLab('Lab 2', adminUser._id, 15, 15, [adminUser._id], joinRequests=[demoUser._id]);
+
+    // end
+    return true; 
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+// parent async call in example data creation 
+// old
 async function seedExampleData() {
   try {
     
@@ -154,14 +180,58 @@ async function seedExampleData() {
 }
 
 
-// lab creation
-async function createLab(labObj) {
+// user creation
+async function createUser(username, name, isAdmin=false) {
   try {
-    console.log(`Creating ${labObj.name}`);
-    let lab = await createModel('Lab', labObj);
-    console.log(`  ${lab.name} Created - Saving...`);
-    await lab.save();
-    console.log(`  ${lab.name} Saved`);
+    const recordObj = {
+      username,
+      password: "password",
+      name,
+      email: `${username.trim().toLowerCase()}@example.com`,
+      isAdmin
+    };
+    let record = await createModel('User', recordObj);
+    return record;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// lab creation
+async function createLab(name, creatorId, innerWidth=15, innerHeight=15, users=[], joinRequests=[]) {
+  try {
+    const recordObj = {
+      createdBy: creatorId,
+      updatedBy: creatorId,
+      name,
+      description: 'An example Lab generated for testing.',
+      innerWidth,
+      innerHeight,
+      users,
+      joinRequests,
+      breadcrumbs: []
+    };
+    let lab = await createModel('Lab', recordObj);
+    lab.breadcrumbs.push({
+      _id: lab._id,
+      name: lab.name,
+      model: "Lab"
+    });
+    lab = await lab.save();
+    // freezers in lab
+    for(let f = 0; f < 2; f++) {
+      let freezer = await createContainer(`Freezer ${f + 1}`, creatorId, lab._id, lab._id, lab.name, lab.breadcrumbs, f, 1, 1, 6, 1, 1);
+      for(let s = 0; s < 2; s++) {
+        let shelf = await createContainer(`Shelf ${s}`, creatorId, lab._id, freezer._id, freezer.name, freezer.breadcrumbs, 1, s, 6, 1, 1, 1);
+        for(let b = 0; b < 2; b++) {
+          let box = await createContainer(`Box ${b}`, creatorId, lab._id, shelf._id, shelf.name, shelf.breadcrumbs, b, 1, 1, 6, 1, 1);
+          for(let p = 0; p < 2; p++) {
+            let plate = await createContainer(`Plate ${p}`, creatorId, lab._id, box._id, box.name, box.breadcrumbs, 1, p, 12, 8, 1, 1);
+          }
+        }
+      }
+    }
     return lab;
   } catch (error) {
     console.log(error);
@@ -169,16 +239,90 @@ async function createLab(labObj) {
   }
 }
 
+// container creation
+async function createContainer(name, creatorId, labId, parentId, parentName, parentBreadcrumbs, parentX=1, parentY=1, innerWidth=3, innerHeight=3, width=1, height=1) {
+  try {
+    let recordObj = {
+      createdBy: creatorId,
+      updatedBy: creatorId,
+      name,
+      description: 'An example Container generated for testing.',
+      lab: labId,
+      parentX,
+      parentY,
+      innerWidth,
+      innerHeight,
+      width,
+      height,
+      breadcrumbs: parentBreadcrumbs
+    };
+    let container = await createModel('Container', recordObj);
+    container.breadcrumbs.push({
+      _id: container._id,
+      name: container.name,
+      model: "Container"
+    });
+    container = await container.save();
+    return container;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// virtual creation
+async function createVirtual(name, creatorId) {
+  try {
+    const recordObj = {
+      createdBy: creatorId,
+      updatedBy: creatorId,
+      name,
+      description: 'An example Virtual generated for testing.',
+      provenance: '<provenance goes here>',
+      genotype: '<genotype goes here>',
+      sequence: '<sequence goes here>'
+    };
+    let record = await createModel('Virtual', recordObj);
+    return record;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// physical creation
+async function createPhysical(name, creatorId, labId, parentId, virtualId, parentX=1, parentY=1, width=1, height=1) {
+  try {
+    const recordObj = {
+      createdBy: creatorId,
+      updatedBy: creatorId,
+      name,
+      description: 'An example Physical generated for testing.',
+      lab: labId,
+      parent: parentId,
+      parentX,
+      parentY,
+      virtual: virtualId,
+      width,
+      height 
+    };
+    let record = await createModel('Physical', recordObj);
+    return record;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 // generic model instantiation
 async function createModel(modelName, modelObj) {
   try {
+    let name = modelName === 'User' ? modelObj.username : modelObj.name;
     const Model = require(`${currentDir}/api/models/${modelName}`);
     const newRecord = new Model(modelObj);
-    let createMessage = modelName === 'User' ? `Creating ${modelObj.username}` : `Creating ${modelObj.name}`
-    const name = modelName === 'User' ? modelObj.username : modelObj.name;
-    console.log(createMessage);
-    return newRecord;
+    const savedRecord = await newRecord.save();
+    console.log(`Created ${modelName}: ${name}`);
+    return savedRecord;
   } catch (error) {
     throw error;
   }
@@ -186,7 +330,7 @@ async function createModel(modelName, modelObj) {
 
 async function clearDatabase() {
   try {
-
+    console.log('Clearing Database...');
     // require models
     const User = require(`${currentDir}/api/models/User`);
     const Lab = require(`${currentDir}/api/models/Lab`);
@@ -206,6 +350,7 @@ async function clearDatabase() {
       await Model.deleteMany({});
     }
 
+    console.log('Database Cleared\n');
     return {
       success: true,
       error: null

@@ -9,97 +9,97 @@ let breadcrumbArray = [];
 const mongoFetch = {
   fetchAll: async (Model) => {
     let results;
-    let allContainers = await getAll(Container);
-    let allPhysicals = await getAll(Physical);
+    //let allContainers = await getAll(Container);
+    //let allPhysicals = await getAll(Physical);
     switch (Model) {
       case Lab:
-        results = await Model.find()
-        .populate({
-          path: 'createdBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'updatedBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'users',
-          select: '_id username'
-        })
-        .populate({
-          path: 'joinRequests',
-          select: '_id username'
-        });
+        results = await Model.find();
+        // .populate({
+        //   path: 'createdBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'updatedBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'users',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'joinRequests',
+        //   select: '_id username'
+        // });
         for(let i = 0; i < results.length; i++) {
           breadcrumbArray = [];
-          results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
-          results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
+          //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
+          //results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
           results[i]['type'] = 'Lab';
           results[i]['endpoint'] = 'labs';
         }
         break;
       case Container:
-        results = await Model.find()
-        .populate({
-          path: 'parent',
-          select: '_id name'
-        })
-        .populate({
-          path: 'createdBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'updatedBy',
-          select: '_id username'
-        })  
-        .populate({
-          path: 'lab',
-          select: '_id name'
-        });
+        results = await Model.find();
+        // .populate({
+        //   path: 'parent',
+        //   select: '_id name'
+        // })
+        // .populate({
+        //   path: 'createdBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'updatedBy',
+        //   select: '_id username'
+        // })  
+        // .populate({
+        //   path: 'lab',
+        //   select: '_id name'
+        // });
         for(let i = 0; i < results.length; i++) {
           breadcrumbArray = [];
-          results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
-          results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
+          //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
+          //results[i]['children'] = await getChildren(results[i], allContainers, allPhysicals, 0, 0);
           results[i]['type'] = 'Container';
           results[i]['endpoint'] = 'containers';
         }
         break;
       case Physical:
-        results = await Model.find()
-        .populate({
-          path: 'parent',
-          select: '_id name'
-        })
-        .populate({
-          path: 'createdBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'updatedBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'lab',
-          select: '_id name'
-        })
-        .populate('virtual');
+        results = await Model.find();
+        // .populate({
+        //   path: 'parent',
+        //   select: '_id name'
+        // })
+        // .populate({
+        //   path: 'createdBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'updatedBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'lab',
+        //   select: '_id name'
+        // })
+        // .populate('virtual');
         for(let i = 0; i < results.length; i++) {
           breadcrumbArray = [];
-          results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
+          //results[i]['breadcrumbs'] = await getBreadcrumbs(results[i]._id);
           results[i]['type'] = 'Physical';
           results[i]['endpoint'] = 'physicals';
         }  
         break; 
       case Virtual:
-        results = await Model.find()
-        .populate({
-          path: 'createdBy',
-          select: '_id username'
-        })
-        .populate({
-          path: 'updatedBy',
-          select: '_id username'
-        });  
+        results = await Model.find();
+        // .populate({
+        //   path: 'createdBy',
+        //   select: '_id username'
+        // })
+        // .populate({
+        //   path: 'updatedBy',
+        //   select: '_id username'
+        // });  
         for(let i = 0; i < results.length; i++) {
           results[i]['type'] = 'Virtual';
           results[i]['endpoint'] = 'virtuals';
@@ -120,8 +120,8 @@ const mongoFetch = {
   fetchOne: async (Model, id) => {
     let isTestMode = process.env.NODE_ENV === 'test';
     let result;
-    let allContainers = await getAll(Container);
-    let allPhysicals = await getAll(Physical);
+    //let allContainers = await getAll(Container);
+    //let allPhysicals = await getAll(Physical);
     if (!isTestMode) {
       switch (Model) {
         case Lab:
@@ -142,7 +142,7 @@ const mongoFetch = {
             path: 'joinRequests',
             select: '_id username'
           });
-          result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
+          //result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
           result['type'] = 'Lab';
           result['endpoint'] = 'labs';
           break;
@@ -164,9 +164,9 @@ const mongoFetch = {
             path: 'lab',
             select: '_id name'
           });
-          result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
+          //result['children'] = await getChildren(result, allContainers, allPhysicals, 0, 0);
           breadcrumbArray = [];
-          result['breadcrumbs'] = await getBreadcrumbs(result._id);
+          //result['breadcrumbs'] = await getBreadcrumbs(result._id);
           result['type'] = 'Container';
           result['endpoint'] = 'containers';
           break;  
@@ -189,7 +189,7 @@ const mongoFetch = {
           })
           .populate('virtual'); 
           breadcrumbArray = [];
-          result['breadcrumbs'] = await getBreadcrumbs(result._id);
+          //result['breadcrumbs'] = await getBreadcrumbs(result._id);
           result['type'] = 'Physical';
           result['endpoint'] = 'physicals'; 
           break;  
@@ -229,71 +229,72 @@ async function getAll(Model) {
   switch (Model) {
     case Lab:
       results = await Model.find()
-      .populate({
-        path: 'createdBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id username'
-      })  
-      .populate({
-        path: 'users',
-        select: '_id username'
-      })
-      .populate({
-        path: 'joinRequests',
-        select: '_id username'
-      });
+      // .populate({
+      //   path: 'createdBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'updatedBy',
+      //   select: '_id username'
+      // })  
+      // .populate({
+      //   path: 'users',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'joinRequests',
+      //   select: '_id username'
+      // });
       break;
     case Container:
       results = await Model.find()
-      .populate({
-        path: 'parent',
-        select: '_id name'
-      })
-      .populate({
-        path: 'createdBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'lab',
-        select: '_id name'
-      });
+      // .populate({
+      //   path: 'parent',
+      //   select: '_id name'
+      // })
+      // .populate({
+      //   path: 'createdBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'updatedBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'lab',
+      //   select: '_id name'
+      // });
+      break;
     case Physical:
       results = await Model.find()
-      .populate({
-        path: 'parent',
-        select: '_id name'
-      })
-      .populate({
-        path: 'createdBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'lab',
-        select: '_id name'
-      })
-      .populate('virtual');  
+      // .populate({
+      //   path: 'parent',
+      //   select: '_id name'
+      // })
+      // .populate({
+      //   path: 'createdBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'updatedBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'lab',
+      //   select: '_id name'
+      // })
+      // .populate('virtual');  
       break; 
     case Virtual:
       results = await Model.find()
-      .populate({
-        path: 'createdBy',
-        select: '_id username'
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id username'
-      });  
+      // .populate({
+      //   path: 'createdBy',
+      //   select: '_id username'
+      // })
+      // .populate({
+      //   path: 'updatedBy',
+      //   select: '_id username'
+      // });  
       break;    
     default:
       results = null;
