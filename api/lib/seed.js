@@ -212,6 +212,15 @@ async function createLab(name, creatorId, innerWidth=15, innerHeight=15, users=[
       joinRequests,
       breadcrumbs: []
     };
+
+    // create random virtuals
+    let virtuals = [];
+    for(let i = 0; i < 5; i++) {
+      let virtual = await createVirtual(getRandomName(), creatorId);
+      virtuals.push(virtual);  
+    }
+    
+    // create lab with content
     let lab = await createModel('Lab', recordObj);
     lab.breadcrumbs.push({
       _id: lab._id,
@@ -229,6 +238,11 @@ async function createLab(name, creatorId, innerWidth=15, innerHeight=15, users=[
           let box = await createContainer(`Box ${b}`, creatorId, lab._id, shelf._id, shelf.name, shelf.breadcrumbs, b, 1, 1, 6, 1, 1);
           for(let p = 0; p < 2; p++) {
             let plate = await createContainer(`Plate ${p}`, creatorId, lab._id, box._id, box.name, box.breadcrumbs, 1, p, 12, 8, 1, 1);
+            for(let ph = 0; ph < 2; ph++) {
+              let virtual = virtuals[getRandomInt(0, virtuals.length - 1)];
+              const physicalName = `${virtual.name}.${getRandomInts(5)}`;
+              await createPhysical(physicalName, creatorId, lab._id, virtual._id, plate._id, plate.name, plate.breadcrumbs, ph, 1, 1, 1);
+            }
           }
         }
       }
@@ -282,10 +296,18 @@ async function createVirtual(name, creatorId) {
       description: 'An example Virtual generated for testing.',
       provenance: '<provenance goes here>',
       genotype: '<genotype goes here>',
-      sequence: '<sequence goes here>'
+      sequence: '<sequence goes here>',
+      breadcrumbs: []
     };
-    let record = await createModel('Virtual', recordObj);
-    return record;
+    let virtual = await createModel('Virtual', recordObj);
+    virtual.breadcrumbs.push({
+      _id: virtual._id,
+      name: virtual.name,
+      model: "Virtual",
+      icon: "dna"
+    });
+    virtual = await virtual.save();
+    return virtual;
   } catch (error) {
     console.log(error);
     throw error;
@@ -293,7 +315,7 @@ async function createVirtual(name, creatorId) {
 }
 
 // physical creation
-async function createPhysical(name, creatorId, labId, parentId, virtualId, parentX=1, parentY=1, width=1, height=1) {
+async function createPhysical(name, creatorId, labId, virtualId, parentId, parentName, parentBreadcrumbs, parentX=1, parentY=1, width=1, height=1) {
   try {
     const recordObj = {
       createdBy: creatorId,
@@ -306,10 +328,18 @@ async function createPhysical(name, creatorId, labId, parentId, virtualId, paren
       parentY,
       virtual: virtualId,
       width,
-      height 
+      height,
+      breadcrumbs: parentBreadcrumbs
     };
-    let record = await createModel('Physical', recordObj);
-    return record;
+    let physical = await createModel('Physical', recordObj);
+    physical.breadcrumbs.push({
+      _id: physical._id,
+      name: physical.name,
+      model: "Physical",
+      icon: "flask"
+    });
+    physical = await physical.save();
+    return physical;
   } catch (error) {
     console.log(error);
     throw error;
@@ -365,3 +395,27 @@ async function clearDatabase() {
     };
   }
 }
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomInts(len) {
+  let result = ""
+  for(let i = 0; i < len; i++){
+    result += String(getRandomInt(0,9))
+  }
+  return Number(result);
+}
+
+function getRandomName() {
+  let virtualPrefixes = ['Asd', 'Bfg', 'Csi', 'Dpi', 'Eff', 'Foo'];
+  let randomPrefix = virtualPrefixes[getRandomInt(0, virtualPrefixes.length - 1)];
+  return `${randomPrefix}${getRandomInts(4)}`;
+}
+
+function coinFlip() {
+  return getRandomInt(0,1) === 1;
+} 

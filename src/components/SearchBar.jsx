@@ -14,8 +14,8 @@ class SearchBar extends Component {
       include: {
         labs: true,
         containers: true,
-        virtuals: false,
-        physicals: false
+        virtuals: true,
+        physicals: true
       },
       labs: [],
       containers: [],
@@ -75,7 +75,7 @@ class SearchBar extends Component {
           <div className="input-group mt-3">
             <div className="input-group-prepend">
               <span className="input-group-text bg-dark text-light">
-                <i className="mdi mdi-magnify mr-2" />Search
+                <i className="mdi mdi-magnify mr-1" />Search
               </span>
             </div>
             <Typeahead
@@ -87,7 +87,8 @@ class SearchBar extends Component {
               options={this.state.records}
               renderMenu={(results, menuProps) => {
                 const searchResults = results.map((result, index) => {
-                  const resultBreadcrumbs = result.breadcrumbs.map((crumb, crumbIndex) => {
+                  let bcrumbs = result.breadcrumbs || [];
+                  const resultBreadcrumbs = bcrumbs.map((crumb, crumbIndex) => {
                     const isActive = crumbIndex === result.breadcrumbs.length - 1;
                     return (
                       <li className={`breadcrumb-item ${isActive ? 'active' : 'inactive'}`}>
