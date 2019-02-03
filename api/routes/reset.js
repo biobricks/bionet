@@ -109,7 +109,7 @@ router.post('/reset-password', (req, res) => {
             const messageText = `Hello ${currentUser.username},\nIf you recently requested an account password change please visit https://endylab.stanford.edu/password-reset/verify and enter in the code '${resetToken}', otherwise disregard this message.\n - The Bionet Team`;
             let messageHtml = `<p>Hello ${currentUser.username},<br/><br/>`;
             messageHtml += `If you recently requested an account password change please visit <a href="https://endylab.stanford.edu/password-reset/verify">https://endylab.stanford.edu/password-reset/verify</a>`;
-            messageHtml += ` and enter in the code '${resetToken}', otherwise disregard this message.<br/> - The ${domain} Team</p>`;
+            messageHtml += ` and enter in the code '${resetToken}', otherwise disregard this message.<br/> - The Bionet Team</p>`;
             const msg = {
               to: currentUser.email,
               from: `donotreply@endylab.stanford.edu`,
