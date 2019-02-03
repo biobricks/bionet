@@ -106,13 +106,13 @@ router.post('/reset-password', (req, res) => {
             });
           } else {
             const domain = `${Config.app.ssl ? 'https' : 'http'}://${Config.app.domain}`;
-            const messageText = `Hello ${currentUser.username},\nIf you recently requested an account password change please visit ${domain}/password-reset/verify and enter in the code '${resetToken}', otherwise disregard this message.\n - The ${domain} Team`;
+            const messageText = `Hello ${currentUser.username},\nIf you recently requested an account password change please visit https://endylab.stanford.edu/password-reset/verify and enter in the code '${resetToken}', otherwise disregard this message.\n - The Bionet Team`;
             let messageHtml = `<p>Hello ${currentUser.username},<br/><br/>`;
-            messageHtml += `If you recently requested an account password change please visit <a href="${domain}/password-reset/verify">${Config.app.ssl ? 'https' : 'http'}://${Config.app.domain}/reset-password/validate</a>`;
+            messageHtml += `If you recently requested an account password change please visit <a href="https://endylab.stanford.edu/password-reset/verify">https://endylab.stanford.edu/password-reset/verify</a>`;
             messageHtml += ` and enter in the code '${resetToken}', otherwise disregard this message.<br/> - The ${domain} Team</p>`;
             const msg = {
               to: currentUser.email,
-              from: `donotreply@${Config.app.domain === 'localhost:3000' ? 'example.com' : Config.app.domain}`,
+              from: `donotreply@endylab.stanford.edu`,
               subject: `Reset ${Config.app.name} Password`,
               text: messageText,
               html: messageHtml
