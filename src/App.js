@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './App.scss';
-import Navigation from './components/Navigation';
 import Router from './components/Router';
 import Footer from './components/Footer';
 import Api from './modules/Api';
-
 
 class App extends Component {
   
@@ -13,13 +11,21 @@ class App extends Component {
     this.state = {
       debug: true,
       isLoggedIn: false,
-      currentUser: {}
+      currentUser: {},
+      action: 'view',
+      selectedRecord: null
     };
+    this.setSelectedRecord = this.setSelectedRecord.bind(this);
     this.refreshCurrentUser = this.refreshCurrentUser.bind(this);
     this.getData = this.getData.bind(this);
     this.refresh = this.refresh.bind(this);
     this.logout = this.logout.bind(this);
   }  
+
+  setSelectedRecord(action, selectedRecord) {
+    this.state.debug && console.log('App.selectedRecord', selectedRecord);
+    this.setState({action, selectedRecord});
+  }
 
   async refreshCurrentUser() {
     try {
@@ -63,6 +69,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log('App.state', this.state);
     this.refresh();
   }
 
@@ -70,8 +77,13 @@ class App extends Component {
     return (
       <div className="App">
         <div className="viewport-container">
-          <Navigation isLoggedIn={this.state.isLoggedIn} logout={this.logout} />
-          <Router {...this.state} refresh={this.refresh} />
+          <Router 
+            {...this.state} 
+            refresh={this.refresh}
+            isLoggedIn={this.state.isLoggedIn} 
+            logout={this.logout}
+            setSelectedRecord={this.setSelectedRecord} 
+          />
         </div>
         <Footer />
       </div>

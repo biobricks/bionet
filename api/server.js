@@ -85,8 +85,8 @@ api.use((req, res, next) => {
 
 require('./routes/static.js')(router); // static info routes
 require('./routes/auth.js')(router, passport); // user authentication routes
-require('./routes/models.js')(router); // all model routes
 require('./routes/reset.js')(router); // reset password
+require('./routes/models.js')(router); // all model routes
 
 api.use('/api/v1', router); // prepend all routes with /api/v1/
 

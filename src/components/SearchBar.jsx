@@ -1,9 +1,14 @@
-import React, { Component, Suspense } from 'react'; 
+import React, { Component, Suspense, lazy } from 'react'; 
+import shortid from 'shortid';
 import Api from '../modules/Api';
 import { Typeahead, Menu, MenuItem } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 import './SearchBar.scss';
+
+const Container = lazy(() => import('./bootstrap/grid/Container'));
+const Row = lazy(() => import('./bootstrap/grid/Row'));
+const Column = lazy(() => import('./bootstrap/grid/Column'));
 
 class SearchBar extends Component {
 
@@ -24,10 +29,15 @@ class SearchBar extends Component {
       records: [],
       selectedRecord: {}
     };
+    this.onSelectRecord = this.onSelectRecord.bind(this);
     this.getAllModel = this.getAllModel.bind(this);
     this.getData = this.getData.bind(this);
   }
   
+  onSelectRecord(record) {
+    this.props.setSelectedRecord('view', record);
+  }
+
   async getAllModel(namePlural) {
     try {
       let records = this.state.records;
@@ -72,48 +82,61 @@ class SearchBar extends Component {
     return (
       <div className="SearchBar">
         <Suspense fallback="Loading..."> 
-          <div className="input-group mt-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text bg-dark text-light">
-                <i className="mdi mdi-magnify mr-1" />Search
-              </span>
-            </div>
-            <Typeahead
-              className=""
-              //bsSize="large"
-              isLoading={this.state.isLoading}
-              labelKey="name"
-              placeholder={this.state.isLoading ? "Loading..." : "Labs, Containers, Virtual & Physical Samples..."}
-              options={this.state.records}
-              renderMenu={(results, menuProps) => {
-                const searchResults = results.map((result, index) => {
-                  let bcrumbs = result.breadcrumbs || [];
-                  const resultBreadcrumbs = bcrumbs.map((crumb, crumbIndex) => {
-                    const isActive = crumbIndex === result.breadcrumbs.length - 1;
-                    return (
-                      <li className={`breadcrumb-item ${isActive ? 'active' : 'inactive'}`}>
-                        <i className={`mdi mdi-${crumb.icon} ml-1`}/>{crumb.name}
-                      </li>
-                    );
-                  });
-                  return (
-                    <MenuItem option={result} position={index}>
-                      <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb">
-                          {resultBreadcrumbs}
-                        </ol>
-                      </nav>
-                    </MenuItem>                      
-                  );
-                });                
-                return (
-                  <Menu {...menuProps}>
-                    {searchResults}
-                  </Menu>
-                );
-              }}
-            />
-          </div>
+          <Container>
+            <Row>
+              <Column col="12" colLg="7">     
+                <div className="input-group mt-3">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text bg-dark text-light">
+                      <i className="mdi mdi-magnify mr-1" />Search
+                    </span>
+                  </div>
+                  <Typeahead
+                    className=""
+                    //bsSize="large"
+                    isLoading={this.state.isLoading}
+                    labelKey="name"
+                    placeholder={this.state.isLoading ? "Loading..." : "Labs, Containers, Virtual & Physical Samples..."}
+                    options={this.state.records}
+                    onChange={(selected) => {
+                      this.onSelectRecord(selected[0]);  
+                    }}
+                    renderMenu={(results, menuProps) => {
+                      const searchResults = results.map((result, index) => {
+                        let bcrumbs = result.breadcrumbs || [];
+                        const resultBreadcrumbs = bcrumbs.map((crumb, crumbIndex) => {
+                          const isActive = crumbIndex === result.breadcrumbs.length - 1;
+                          return (
+                            <li key={shortid.generate()} className={`breadcrumb-item ${isActive ? 'active' : 'inactive'}`}>
+                              <i className={`mdi mdi-${crumb.icon} ml-1`}/>{crumb.name}
+                            </li>
+                          );
+                        });
+                        return (
+                          <MenuItem 
+                            key={shortid.generate()}  
+                            option={result} 
+                            position={index}
+                          >
+                            <nav aria-label="breadcrumb">
+                              <ol className="breadcrumb">
+                                {resultBreadcrumbs}
+                              </ol>
+                            </nav>
+                          </MenuItem>                      
+                        );
+                      });                
+                      return (
+                        <Menu {...menuProps}>
+                          {searchResults}
+                        </Menu>
+                      );
+                    }}
+                  />
+                </div>
+              </Column>
+            </Row>
+          </Container>      
         </Suspense>
       </div>
     );

@@ -37,6 +37,7 @@ module.exports = function(router) {
     newRecord.findByIdAndUpdate(req.params.recordId, req.body) 
     .then(data => {
       jsonResponse = {
+        success: true,
         message: "Success = data updated",
         error: {},
         data      
@@ -45,6 +46,7 @@ module.exports = function(router) {
     })
     .catch((error) => {
       jsonResponse = {
+        success: false,
         message: "Fail - there was a problem updating the record",
         error,
         data: {}     
@@ -60,6 +62,7 @@ module.exports = function(router) {
     Model.findOneAndDelete({_id: req.params.recordId}).exec(error => {
       if (error) {
         jsonResponse = {
+          success: false,
           message: "There was a problem removing the record.",
           error,
           data: {}
@@ -67,6 +70,7 @@ module.exports = function(router) {
         res.status(500).json(jsonResponse);
       } else {
         jsonResponse = {
+          success: true,
           message: "The record was successfully removed.",
           error: {},
           data: {}
@@ -82,7 +86,8 @@ module.exports = function(router) {
       Fetch.fetchOne(res.locals.Model, req.params.recordId)
       .then((result) => {
         let jsonResponse = {
-          message: "Success - data retrieved from Bionet Centralized Database",
+          success: true,
+          message: "Success - data retrieved",
           error: {},
           data: result
         };
@@ -99,6 +104,7 @@ module.exports = function(router) {
           message = "An error occurred."
         }
         let jsonResponse = {
+          success: false,
           message,
           error,
           data: {}
@@ -114,6 +120,7 @@ module.exports = function(router) {
     Fetch.fetchAll(res.locals.Model)
     .then((result) => {
       let jsonResponse = {
+        success: true,
         message: "Success",
         error: {},
         data: result
@@ -122,6 +129,7 @@ module.exports = function(router) {
     })
     .catch((error) => {
       let jsonResponse = {
+        success: false,
         message: "There was an error",
         error,
         data: []

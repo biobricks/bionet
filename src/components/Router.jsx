@@ -1,5 +1,6 @@
 import React, { Component, lazy } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import Navigation from './Navigation';
 import Page from './pages/Page';
 import RouteMessageCard from './pages/RouteMessageCard';
 
@@ -13,8 +14,10 @@ const Landing = lazy(() => import('./pages/Landing'));
 
 class Router extends Component {
   render () {
+    this.props.debug && console.log('Router.props', this.props);
     return (
       <div className="Router">
+        <Navigation {...this.props} />
         <Switch>
           <Route exact path="/password-reset/verify" render={(props) => <Page {...props} {...this.props} PageComponent={PasswordResetVerify} /> } />
           <Route exact path="/password-reset" render={(props) => <Page {...props} {...this.props} PageComponent={PasswordReset} /> } />
@@ -39,4 +42,4 @@ class Router extends Component {
   }
 }
 
-export default Router;
+export default withRouter(Router);

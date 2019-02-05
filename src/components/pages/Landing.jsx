@@ -1,12 +1,12 @@
 import React, { Component, Suspense, lazy } from 'react'; 
 import { Link } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
-//import Api from '../../modules/Api';
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
 const Column = lazy(() => import('../bootstrap/grid/Column'));
 const Card = lazy(() => import('../bootstrap/components/Card'));
+// const NavCard = lazy(() => import('../bootstrap/components/NavCard'));
 const SearchBar = lazy(() => import('../SearchBar'));
 
 class Landing extends Component {
@@ -17,14 +17,16 @@ class Landing extends Component {
   }
 
   render() {
+    const selectedRecord = this.props.selectedRecord;
+    const action = this.props.action;
     return (
       <div className="Landing">
         <Suspense fallback="Loading...">
           <FadeIn>
-            <Container>
+            <SearchBar {...this.props} />
+            <Container className="pb-3">
               <Row>
                 <Column col="12" colLg="7">
-                  <SearchBar {...this.props} />
                   <Card icon="home" title="Home" className="mt-3">
                     {this.props.isLoggedIn ? (
                       <>
@@ -32,12 +34,26 @@ class Landing extends Component {
                       </>
                     ) : (
                       <>
-                        <p className="card-text">Welcome to Bionet. {this.props.currentUser.username}</p>
+                        <p className="card-text">Welcome to Bionet.</p>
                         <Link className="card-link" to="/login">Login</Link>
                         <Link className="card-link" to="/signup">Sign Up</Link>
                       </>
                     )}
-                  </Card>  
+                  </Card> 
+                  {selectedRecord && (
+                    <>
+                      {(action === 'view') && (
+                        <div className="card mt-3">
+                          <div className="navbar navbar-expand-lg navbar-dark bg-dark">
+                            <div className="navbar-brand">
+                              <i className={`mdi mdi-${selectedRecord.icon} mr-2`} />{selectedRecord.name}
+                            </div>
+                            
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )} 
                 </Column>  
               </Row>
             </Container>
