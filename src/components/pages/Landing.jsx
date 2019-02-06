@@ -48,7 +48,9 @@ class Landing extends Component {
                             <div className="navbar-brand">
                               <i className={`mdi mdi-${selectedRecord.icon} mr-2`} />{selectedRecord.name}
                             </div>
-                            
+                            <div className="card-body">
+                          
+                            </div>
                           </div>
                         </div>
                       )}
