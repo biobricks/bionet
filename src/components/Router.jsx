@@ -26,7 +26,7 @@ class Router extends Component {
           <Route exact path="/signup" render={(props) => <Page {...props} {...this.props} PageComponent={Signup} /> } />
           <Route exact path="/profile" render={(props) => <Page {...props} {...this.props} PageComponent={Profile} /> } />
           <Route exact path="/" render={(props) => <Page {...props} {...this.props} PageComponent={Landing} /> } />
-          <Route 
+          {/* <Route 
             render={(props) => (
               <RouteMessageCard
                 icon="alert-circle"
@@ -35,7 +35,7 @@ class Router extends Component {
                 message="The content you have requested could not be found.  Please check the link and try again."
               />
             )}
-          />
+          /> */}
         </Switch>
       </div>
     );
