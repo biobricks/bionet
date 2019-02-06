@@ -1,5 +1,4 @@
-import React, { Component, Suspense } from 'react'; 
-//import { Link } from 'react-router-dom';
+import React, { Component } from 'react'; 
 import FadeIn from 'react-fade-in';
 
 class DataPanel extends Component {
@@ -14,24 +13,22 @@ class DataPanel extends Component {
     const action = this.props.action;
     return (
       <div className="DataPanel">
-        {/* <Suspense fallback="Loading..."> */}
-          <FadeIn>
-            <>
-              {(action === 'view') && (
-                <div className="card mt-3">
-                  <div className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div className="navbar-brand">
-                      <i className={`mdi mdi-${selectedRecord.icon} mr-2`} />{selectedRecord.name}
-                    </div>
-                    <div className="card-body">
-                  
-                    </div>
+        <FadeIn>
+          <>
+            {(action === 'view') && (
+              <div className="card mt-3">
+                <div className="navbar navbar-expand-lg navbar-dark bg-dark">
+                  <div className="navbar-brand">
+                    <i className={`mdi mdi-${selectedRecord.icon} mr-2`} />{selectedRecord.name}
+                  </div>
+                  <div className="card-body">
+                
                   </div>
                 </div>
-              )}
-            </>
-          </FadeIn>
-        {/* </Suspense> */}
+              </div>
+            )}
+          </>
+        </FadeIn>
       </div>
     );
   }

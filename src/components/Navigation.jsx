@@ -1,23 +1,13 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Component } from 'react';
 import logo from '../images/bionet-logo.png';
-
-const Navbar = lazy(() => import('./bootstrap/components/Navbar'));
-const NavbarLink = lazy(() => import('./bootstrap/components/NavbarLink'));
-const NavbarDropdown = lazy(() => import('./bootstrap/components/NavbarDropdown'));
-const NavbarDropdownLink = lazy(() => import('./bootstrap/components/NavbarDropdownLink'));
-
-const navbarFallback = () => {
-  return (
-    <Navbar className="Navigation" brandImgSrc={logo} brandWidth="40">
-      Loading...
-    </Navbar>
-  );
-}
+import Navbar from './bootstrap/components/Navbar';
+import NavbarLink from './bootstrap/components/NavbarLink';
+import NavbarDropdown from './bootstrap/components/NavbarDropdown';
+import NavbarDropdownLink from './bootstrap/components/NavbarDropdownLink';
 
 class Navigation extends Component {
   render () {
     return (
-      <Suspense fallback={navbarFallback}>
         <Navbar className="Navigation" brandImgSrc={logo} brandWidth="40">
           { this.props.isLoggedIn ? (
             <>
@@ -29,7 +19,7 @@ class Navigation extends Component {
               </NavbarDropdown>
             </>
           ) : (
-            <>
+            <>t 
             <NavbarLink to="/login">
               <i className="mdi mdi-login-variant mr-1" />Login
             </NavbarLink> 
@@ -40,7 +30,6 @@ class Navigation extends Component {
           )}
           <NavbarLink to="/about">About</NavbarLink>
         </Navbar>
-      </Suspense>
     );
   }
 }

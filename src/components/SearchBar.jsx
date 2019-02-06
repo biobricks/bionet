@@ -80,7 +80,6 @@ class SearchBar extends Component {
 
   render() {
     const records = this.state.records || [];
-    const recordsExist = records && records.length === 0;
     return (
       <div className="SearchBar">
         <Suspense fallback="Loading..."> 
