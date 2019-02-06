@@ -2,7 +2,7 @@ import React, { Component, lazy } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Navigation from './Navigation';
 import Page from './pages/Page';
-import RouteMessageCard from './pages/RouteMessageCard';
+//import RouteMessageCard from './pages/RouteMessageCard';
 
 const PasswordReset = lazy(() => import('./pages/PasswordReset'));
 const PasswordResetVerify = lazy(() => import('./pages/PasswordResetVerify'));

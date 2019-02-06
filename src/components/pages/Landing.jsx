@@ -1,13 +1,15 @@
 import React, { Component, Suspense, lazy } from 'react'; 
 import { Link } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
+import DataPanel from '../DataPanel';
+
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
 const Column = lazy(() => import('../bootstrap/grid/Column'));
 const Card = lazy(() => import('../bootstrap/components/Card'));
-// const NavCard = lazy(() => import('../bootstrap/components/NavCard'));
 const SearchBar = lazy(() => import('../SearchBar'));
+//const DataPanel = lazy(() => import('../DataPanel'));
 
 class Landing extends Component {
 
@@ -18,7 +20,6 @@ class Landing extends Component {
 
   render() {
     const selectedRecord = this.props.selectedRecord;
-    const action = this.props.action;
     return (
       <div className="Landing">
         <Suspense fallback="Loading...">
@@ -41,20 +42,7 @@ class Landing extends Component {
                     )}
                   </Card> 
                   {selectedRecord && (
-                    <>
-                      {(action === 'view') && (
-                        <div className="card mt-3">
-                          <div className="navbar navbar-expand-lg navbar-dark bg-dark">
-                            <div className="navbar-brand">
-                              <i className={`mdi mdi-${selectedRecord.icon} mr-2`} />{selectedRecord.name}
-                            </div>
-                            <div className="card-body">
-                          
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </>
+                    <DataPanel {...this.props} />
                   )} 
                 </Column>  
               </Row>

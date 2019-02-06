@@ -79,6 +79,8 @@ class SearchBar extends Component {
   }
 
   render() {
+    const records = this.state.records || [];
+    const recordsExist = records && records.length === 0;
     return (
       <div className="SearchBar">
         <Suspense fallback="Loading..."> 
@@ -97,7 +99,7 @@ class SearchBar extends Component {
                     isLoading={this.state.isLoading}
                     labelKey="name"
                     placeholder={this.state.isLoading ? "Loading..." : "Labs, Containers, Virtual & Physical Samples..."}
-                    options={this.state.records}
+                    options={records}
                     onChange={(selected) => {
                       this.onSelectRecord(selected[0]);  
                     }}

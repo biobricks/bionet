@@ -6,10 +6,18 @@ const NavbarLink = lazy(() => import('./bootstrap/components/NavbarLink'));
 const NavbarDropdown = lazy(() => import('./bootstrap/components/NavbarDropdown'));
 const NavbarDropdownLink = lazy(() => import('./bootstrap/components/NavbarDropdownLink'));
 
+const navbarFallback = () => {
+  return (
+    <Navbar className="Navigation" brandImgSrc={logo} brandWidth="40">
+      Loading...
+    </Navbar>
+  );
+}
+
 class Navigation extends Component {
   render () {
     return (
-      <Suspense fallback="Loading...">
+      <Suspense fallback={navbarFallback}>
         <Navbar className="Navigation" brandImgSrc={logo} brandWidth="40">
           { this.props.isLoggedIn ? (
             <>
