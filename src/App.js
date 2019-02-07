@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      debug: true,
+      debug: false,
       isLoggedIn: false,
       currentUser: {},
       action: 'view',
@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('App.state', this.state);
+    this.state.debug && console.log('App.state', this.state);
     this.refresh();
   }
 
