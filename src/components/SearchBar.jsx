@@ -35,7 +35,8 @@ class SearchBar extends Component {
   }
   
   onSelectRecord(record) {
-    this.props.setSelectedRecord('view', record);
+    const recordExists = record && Object.keys(record).length > 0;
+    if (recordExists) { this.props.setSelectedRecord('view', record); }
   }
 
   async getAllModel(namePlural) {

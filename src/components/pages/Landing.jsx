@@ -1,7 +1,8 @@
 import React, { Component, lazy } from 'react'; 
 import { Link } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
-import DataPanel from '../panels/DataPanel';
+import DataPanel from '../DataPanel/DataPanel';
+import VisualPanel from '../VisualPanel/VisualPanel';
 import SearchBar from '../SearchBar';
 
 
@@ -22,6 +23,8 @@ class Landing extends Component {
   render() {
     const selectedRecord = this.props.selectedRecord;
     const selectedRecordExists = selectedRecord && Object.keys(selectedRecord).length > 0;
+    const model = selectedRecordExists && selectedRecord.model;
+    const showVisualPanel = model === 'Lab' || model === 'Container';
     return (
       <div className="Landing">
           <FadeIn>
@@ -51,8 +54,16 @@ class Landing extends Component {
                     </>
                   )}    
                 </Column>  
+
                 {/* Right Panel */}
-                {/* Grid Card Here */}
+                {selectedRecordExists && showVisualPanel && (
+                  <Column col="12" colLg="5">
+                    {selectedRecord && (
+                      <VisualPanel {...this.props} />
+                    )}                       
+                  </Column>
+                )}
+
               </Row>
             </Container>
           </FadeIn>

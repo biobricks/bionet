@@ -13,9 +13,11 @@ class App extends Component {
       isLoggedIn: false,
       currentUser: {},
       action: 'view',
+      view: 'grid',
       selectedRecord: null
     };
     this.setAction = this.setAction.bind(this);
+    this.setView = this.setView.bind(this);
     this.setSelectedRecord = this.setSelectedRecord.bind(this);
     this.refreshCurrentUser = this.refreshCurrentUser.bind(this);
     this.getData = this.getData.bind(this);
@@ -24,8 +26,12 @@ class App extends Component {
   }  
 
   setAction(action) {
-    console.log('set action called', action);
     this.setState({action});
+  }
+
+  setView(view) {
+    console.log('set view called', view);
+    this.setState({view});
   }
 
   setSelectedRecord(action, selectedRecord) {
@@ -97,6 +103,7 @@ class App extends Component {
             isLoggedIn={this.state.isLoggedIn} 
             logout={this.logout}
             setAction={this.setAction}
+            setView={this.setView}
             setSelectedRecord={this.setSelectedRecord} 
           />
         </div>
