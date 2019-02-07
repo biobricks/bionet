@@ -7,6 +7,8 @@ import DataPanelView from './DataPanelView';
 import DataPanelNew from './DataPanelNew';
 import DataPanelEdit from './DataPanelEdit';
 import DataPanelDelete from './DataPanelDelete';
+import DataPanelAdd from './DataPanelAdd';
+import DataPanelMove from './DataPanelMove';
 
 class DataPanel extends Component {
 
@@ -31,6 +33,15 @@ class DataPanel extends Component {
       case 'delete':
         title = `Delete ${recordName}`;
         break;
+      case 'add container':
+        title = `Add Container To ${recordName}`;
+        break; 
+      case 'add physical':
+        title = `Add Physical To ${recordName}`;
+        break;
+      case 'move':
+        title = `Move ${recordName}`;
+        break;      
       default:
         title = recordName;
     } 
@@ -48,6 +59,9 @@ class DataPanel extends Component {
             {action === 'new' && <DataPanelNew {...this.props} />}
             {action === 'edit' && <DataPanelEdit {...this.props} />}
             {action === 'delete' && <DataPanelDelete {...this.props} />}
+            {action === 'add container' && <DataPanelAdd {...this.props} add="Container"/>}
+            {action === 'add physical' && <DataPanelAdd {...this.props} add="Physical"/>}
+            {action === 'move' && <DataPanelMove {...this.props}/>}
           </DataPanelCard>
         </FadeIn>
       </div>

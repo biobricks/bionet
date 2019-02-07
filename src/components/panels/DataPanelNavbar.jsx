@@ -33,6 +33,7 @@ class DataPanelNavbar extends Component {
 
         <div className="collapse navbar-collapse" id="selectedRecordNav">
           <ul className="navbar-nav ml-auto">
+
             <li className="nav-item dropdown">
               <button className="nav-link dropdown-toggle bg-dark border-0" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="mdi mdi-settings mr-2" />
@@ -59,22 +60,45 @@ class DataPanelNavbar extends Component {
                 >
                   <i className="mdi mdi-delete mr-2" action="delete"/>Delete {recordName}
                 </button>                
-                <button 
+                {/* <button 
                   className={action === 'list' ? 'dropdown-item active' : 'dropdown-item'}
                   action="list"
                   onClick={this.onLinkClick}
                 >
                   <i className="mdi mdi-format-list-bulleted mr-2" action="list"/>List {selectedRecord.model}s
-                </button>
-                <button 
+                </button> */}
+                {/* <button 
                   className={action === 'new' ? 'dropdown-item active' : 'dropdown-item'}
                   action="new"
                   onClick={this.onLinkClick}
                 >
                   <i className="mdi mdi-plus mr-2" action="new"/>New {selectedRecord.model}
+                </button> */}
+              </div>
+            </li>
+
+            <li className="nav-item dropdown">
+              <button className="nav-link dropdown-toggle bg-dark border-0" id="addDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i className="mdi mdi-plus mr-2" />
+              </button>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <button 
+                  className={action === 'add container' ? 'dropdown-item active' : 'dropdown-item'}
+                  action="add container"
+                  onClick={this.onLinkClick}
+                >
+                  <i className="mdi mdi-grid mr-2" action="add container"/>Add Container
+                </button>
+                <button 
+                  className={action === 'add physical' ? 'dropdown-item active' : 'dropdown-item'}
+                  action="add physical"
+                  onClick={this.onLinkClick}
+                >
+                  <i className="mdi mdi-flask mr-2" action="add physical"/>Add Physical
                 </button>
               </div>
             </li>
+
           </ul>
         </div>
 
