@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FadeIn from 'react-fade-in';
 import VisualPanelNavbar from './VisualPanelNavbar';
 import VisualPanelView from './VisualPanelView';
 
@@ -36,14 +37,23 @@ class VisualPanel extends Component {
       default:
         title = recordName;
     } 
+    const showPanel = action === 'view';
     return (
-      <div className="VisualPanel card mt-3">
-        <VisualPanelNavbar
-          {...this.props}
-          icon={selectedRecord.icon}
-          title={title}            
-        />
-        {action === 'view' && <VisualPanelView {...this.props} />}
+      <div className="VisualPanel">
+        {showPanel && (
+          <FadeIn>
+            <div className="card mt-3">
+              <VisualPanelNavbar
+                {...this.props}
+                icon={selectedRecord.icon}
+                title={title}            
+              />
+              {action === 'view' && (
+                <VisualPanelView {...this.props} />
+              )}
+            </div>
+          </FadeIn>
+        )}  
       </div>
     );
   }
