@@ -13,7 +13,7 @@ class Navigation extends Component {
             <>
               <NavbarDropdown label="Account" icon="account" id="account-dropdown">
                 <NavbarDropdownLink to="/profile" label="Profile" icon="account" />
-                <button className="dropdown-item bg-dark" onClick={this.props.logout}>
+                <button className="dropdown-item" onClick={this.props.logout}>
                   <i className="mdi mdi-logout-variant mr-1" />Logout
                 </button>
               </NavbarDropdown>
