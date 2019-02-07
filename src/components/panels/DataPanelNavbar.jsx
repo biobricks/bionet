@@ -17,6 +17,7 @@ class DataPanelNavbar extends Component {
 
   render () {
     const selectedRecord = this.props.selectedRecord;
+    const showAddMenu = selectedRecord.model === 'Lab' || selectedRecord.model === 'Container';
     const recordName = selectedRecord.model === 'User' ? selectedRecord.username : selectedRecord.name;
     const action = this.props.action;
     return (
@@ -77,27 +78,29 @@ class DataPanelNavbar extends Component {
               </div>
             </li>
 
-            <li className="nav-item dropdown">
-              <button className="nav-link dropdown-toggle bg-dark border-0" id="addDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i className="mdi mdi-plus mr-2" />
-              </button>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <button 
-                  className={action === 'add container' ? 'dropdown-item active' : 'dropdown-item'}
-                  action="add container"
-                  onClick={this.onLinkClick}
-                >
-                  <i className="mdi mdi-grid mr-2" action="add container"/>Add Container
+            {showAddMenu && (
+              <li className="nav-item dropdown">
+                <button className="nav-link dropdown-toggle bg-dark border-0" id="addDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i className="mdi mdi-plus mr-2" />
                 </button>
-                <button 
-                  className={action === 'add physical' ? 'dropdown-item active' : 'dropdown-item'}
-                  action="add physical"
-                  onClick={this.onLinkClick}
-                >
-                  <i className="mdi mdi-flask mr-2" action="add physical"/>Add Physical
-                </button>
-              </div>
-            </li>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <button 
+                    className={action === 'add container' ? 'dropdown-item active' : 'dropdown-item'}
+                    action="add container"
+                    onClick={this.onLinkClick}
+                  >
+                    <i className="mdi mdi-grid mr-2" action="add container"/>Add Container
+                  </button>
+                  <button 
+                    className={action === 'add physical' ? 'dropdown-item active' : 'dropdown-item'}
+                    action="add physical"
+                    onClick={this.onLinkClick}
+                  >
+                    <i className="mdi mdi-flask mr-2" action="add physical"/>Add Physical
+                  </button>
+                </div>
+              </li>
+            )}  
 
           </ul>
         </div>
