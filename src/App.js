@@ -13,7 +13,7 @@ class App extends Component {
       isLoggedIn: false,
       currentUser: {},
       action: 'view',
-      view: 'grid',
+      view: 'Grid',
       selectedRecord: null
     };
     this.setAction = this.setAction.bind(this);

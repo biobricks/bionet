@@ -35,31 +35,31 @@ class VisualPanelNavbar extends Component {
         <div className="collapse navbar-collapse" id="visualPanelNav">
           <ul className="navbar-nav ml-auto">
 
-            <li className={view === 'grid' ? 'nav-item active' : 'nav-item'}>
+            <li className={view === 'Grid' ? 'nav-item active' : 'nav-item'}>
               <button 
                 className="nav-link bg-dark border-0"
-                view="grid"
+                view="Grid"
                 onClick={this.onLinkClick}
               >
-                <i className="mdi mdi-grid" view="grid"/>
+                <i className="mdi mdi-grid" view="Grid"/>
               </button>
             </li>
             {action === 'view' && (
               <>
-                <li className={view === '2D' ? 'nav-item active' : 'nav-item'}>
+                <li className={view === '2D Graph' ? 'nav-item active' : 'nav-item'}>
                   <button 
                     className="nav-link bg-dark border-0"
-                    view="2D"
+                    view="2D Graph"
                     onClick={this.onLinkClick}
                   >
                     2D
                   </button>
                 </li>
 
-                <li className={view === '3D' ? 'nav-item active' : 'nav-item'}>
+                <li className={view === '3D Graph' ? 'nav-item active' : 'nav-item'}>
                   <button 
                     className="nav-link bg-dark border-0"
-                    view="3D"
+                    view="3D Graph"
                     onClick={this.onLinkClick}
                   >
                     3D

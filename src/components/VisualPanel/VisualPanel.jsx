@@ -8,6 +8,7 @@ class VisualPanel extends Component {
     const selectedRecord = this.props.selectedRecord;
     const recordName = selectedRecord.model === 'User' ? selectedRecord.username : selectedRecord.name;
     const action = this.props.action;
+    const view = this.props.view;
     let title;
     switch (action) {
       case 'list':
@@ -37,6 +38,7 @@ class VisualPanel extends Component {
       default:
         title = recordName;
     } 
+    title += ` ${view}`;
     const showPanel = action === 'view';
     return (
       <div className="VisualPanel">
