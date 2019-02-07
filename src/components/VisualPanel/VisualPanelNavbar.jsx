@@ -18,7 +18,7 @@ class VisualPanelNavbar extends Component {
   render () {
     //const selectedRecord = this.props.selectedRecord;
     //const recordName = selectedRecord.model === 'User' ? selectedRecord.username : selectedRecord.name;
-    //const action = this.props.action;
+    const action = this.props.action;
     const view = this.props.view;
     return (
       <div className="VisualPanelNavbar navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,27 +44,29 @@ class VisualPanelNavbar extends Component {
                 <i className="mdi mdi-grid" view="grid"/>
               </button>
             </li>
+            {action === 'view' && (
+              <>
+                <li className={view === '2D' ? 'nav-item active' : 'nav-item'}>
+                  <button 
+                    className="nav-link bg-dark border-0"
+                    view="2D"
+                    onClick={this.onLinkClick}
+                  >
+                    2D
+                  </button>
+                </li>
 
-            <li className={view === '2D' ? 'nav-item active' : 'nav-item'}>
-              <button 
-                className="nav-link bg-dark border-0"
-                view="2D"
-                onClick={this.onLinkClick}
-              >
-                2D
-              </button>
-            </li>
-
-            <li className={view === '3D' ? 'nav-item active' : 'nav-item'}>
-              <button 
-                className="nav-link bg-dark border-0"
-                view="3D"
-                onClick={this.onLinkClick}
-              >
-                3D
-              </button>
-            </li>
-
+                <li className={view === '3D' ? 'nav-item active' : 'nav-item'}>
+                  <button 
+                    className="nav-link bg-dark border-0"
+                    view="3D"
+                    onClick={this.onLinkClick}
+                  >
+                    3D
+                  </button>
+                </li>
+              </>
+            )}  
           </ul>
         </div>
 
