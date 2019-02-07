@@ -30,7 +30,15 @@ class App extends Component {
 
   setSelectedRecord(action, selectedRecord) {
     this.state.debug && console.log('App.selectedRecord', selectedRecord);
-    this.setState({action, selectedRecord});
+    Api.get(`${selectedRecord.endpoint}/${selectedRecord._id}`)
+    .then((res) => {
+      selectedRecord = res.data || selectedRecord;
+      console.log('res', selectedRecord)
+      this.setState({action, selectedRecord});
+    })
+    .catch((error) => {
+      throw error;
+    });
   }
 
   async refreshCurrentUser() {

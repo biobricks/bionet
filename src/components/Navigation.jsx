@@ -3,17 +3,35 @@ import logo from '../images/bionet-logo.png';
 import Navbar from './bootstrap/components/Navbar';
 import NavbarLink from './bootstrap/components/NavbarLink';
 import NavbarDropdown from './bootstrap/components/NavbarDropdown';
-import NavbarDropdownLink from './bootstrap/components/NavbarDropdownLink';
 
 class Navigation extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.onProfileLinkClick = this.onProfileLinkClick.bind(this);
+  }
+
+  onProfileLinkClick(e) {
+    this.props.setSelectedRecord('view', this.props.currentUser);
+  }
+
   render () {
     return (
         <Navbar className="Navigation" brandImgSrc={logo} brandWidth="40">
           { this.props.isLoggedIn ? (
             <>
               <NavbarDropdown label="Account" icon="account" id="account-dropdown">
-                <NavbarDropdownLink to="/profile" label="Profile" icon="account" />
-                <button className="dropdown-item" onClick={this.props.logout}>
+                <button 
+                  className="dropdown-item" 
+                  onClick={this.onProfileLinkClick}
+                >
+                  <i className="mdi mdi-account mr-1" />Profile
+                </button>
+                <button 
+                  className="dropdown-item" 
+                  onClick={this.props.logout}
+                >
                   <i className="mdi mdi-logout-variant mr-1" />Logout
                 </button>
               </NavbarDropdown>
