@@ -1,8 +1,9 @@
 import React, { Component, lazy } from 'react'; 
 import { Link } from 'react-router-dom';
 import FadeIn from 'react-fade-in';
-import DataPanel from '../DataPanel';
+import DataPanel from '../panels/DataPanel';
 import SearchBar from '../SearchBar';
+
 
 const Container = lazy(() => import('../bootstrap/grid/Container'));
 const Row = lazy(() => import('../bootstrap/grid/Row'));
@@ -27,6 +28,8 @@ class Landing extends Component {
             <SearchBar {...this.props} />
             <Container className="pb-3">
               <Row>
+
+                {/* Left Panel */}
                 <Column col="12" colLg="7">
                   { !selectedRecordExists ? (
                     <Card icon="home" title="Home" className="mt-3">
@@ -48,6 +51,8 @@ class Landing extends Component {
                     </>
                   )}    
                 </Column>  
+                {/* Right Panel */}
+                {/* Grid Card Here */}
               </Row>
             </Container>
           </FadeIn>

@@ -15,12 +15,18 @@ class App extends Component {
       action: 'view',
       selectedRecord: null
     };
+    this.setAction = this.setAction.bind(this);
     this.setSelectedRecord = this.setSelectedRecord.bind(this);
     this.refreshCurrentUser = this.refreshCurrentUser.bind(this);
     this.getData = this.getData.bind(this);
     this.refresh = this.refresh.bind(this);
     this.logout = this.logout.bind(this);
   }  
+
+  setAction(action) {
+    console.log('set action called', action);
+    this.setState({action});
+  }
 
   setSelectedRecord(action, selectedRecord) {
     this.state.debug && console.log('App.selectedRecord', selectedRecord);
@@ -82,6 +88,7 @@ class App extends Component {
             refresh={this.refresh}
             isLoggedIn={this.state.isLoggedIn} 
             logout={this.logout}
+            setAction={this.setAction}
             setSelectedRecord={this.setSelectedRecord} 
           />
         </div>
